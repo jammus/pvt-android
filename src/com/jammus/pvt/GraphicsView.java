@@ -7,6 +7,8 @@ import java.util.TimerTask;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.text.format.Time;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -25,7 +27,9 @@ public class GraphicsView extends View {
 		
 		testActivity = (PerformTestActivity) context;
 		
-		circlePaint = new Paint(getResources().getColor(R.color.stimulus));
+		int color = getResources().getColor(R.color.stimulus);
+		circlePaint = new Paint();
+		circlePaint.setColor(color);
 		
 		randomGenerator = new Random();
 		
@@ -46,7 +50,8 @@ public class GraphicsView extends View {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() { 
-				startTime = scheduledExecutionTime();
+				startTime = System.nanoTime();
+				Log.d("Start", String.valueOf(startTime));
 				showStimulus();
 			 }
 			
@@ -64,15 +69,27 @@ public class GraphicsView extends View {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent e) {
+		int action = e.getAction();
+		int actionCode = action & MotionEvent.ACTION_MASK;
+		if (actionCode != MotionEvent.ACTION_DOWN) {
+			return true;
+		}
 		if (isStimulusShown) {
-			testActivity.registerScore();
+			float score = calculateScore();
+			testActivity.registerScore(score);
 			hideStimulus();
-			scheduleStimulus();
+			if (! testActivity.isTestComplete()) {
+				scheduleStimulus();
+			}
 		}
 		else {
 			testActivity.registerError();
 		}
 		return true;
+	}
+	
+	private float calculateScore() {
+		return (System.nanoTime() - startTime) / (float) 1000000;
 	}
 	
 	private void drawStimulus(Canvas canvas) {
