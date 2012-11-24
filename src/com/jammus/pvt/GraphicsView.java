@@ -1,5 +1,6 @@
 package com.jammus.pvt;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,6 +15,10 @@ public class GraphicsView extends View {
 	private PerformTestActivity testActivity;
 	private long startTime;
 	private boolean isStimulusShown;
+	private Random randomGenerator;
+	
+	private final int MINIMUM_DELAY = 2000;
+	private final int MAXIMUM_DELAY = 10000;
 	
 	public GraphicsView(Context context) {
 		super(context);
@@ -22,11 +27,18 @@ public class GraphicsView extends View {
 		
 		circlePaint = new Paint(getResources().getColor(R.color.stimulus));
 		
+		randomGenerator = new Random();
+		
 		scheduleStimulus();
 	}
 	
 	private void showStimulus() {
 		isStimulusShown = true;
+		postInvalidate();
+	}
+	
+	private void hideStimulus() {
+		isStimulusShown = false;
 		postInvalidate();
 	}
 	
@@ -39,7 +51,8 @@ public class GraphicsView extends View {
 			 }
 			
 		};
-		new Timer().schedule(task, 2000);
+		int delay = randomGenerator.nextInt(MAXIMUM_DELAY - MINIMUM_DELAY) + MINIMUM_DELAY;
+		new Timer().schedule(task, delay);
 	}
 	
 	@Override
@@ -51,14 +64,13 @@ public class GraphicsView extends View {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent e) {
-		if (! isStimulusShown) {
-			testActivity.registerError();
+		if (isStimulusShown) {
+			testActivity.registerScore();
+			hideStimulus();
+			scheduleStimulus();
 		}
 		else {
-			isStimulusShown = false;
-			testActivity.registerScore();
-			scheduleStimulus();
-			postInvalidate();
+			testActivity.registerError();
 		}
 		return true;
 	}
