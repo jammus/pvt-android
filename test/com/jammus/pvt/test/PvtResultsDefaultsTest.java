@@ -2,7 +2,7 @@ package com.jammus.pvt.test;
 
 import java.util.Date;
 
-import com.jammus.pvt.PvtResults;
+import com.jammus.pvt.PvtResult;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -10,17 +10,17 @@ import org.junit.Test;
 
 public class PvtResultsDefaultsTest {
 
-	private PvtResults results;
+	private PvtResult result;
 	
 	@Before
 	public void setUp() {
-		results = new PvtResults();
+		result = new PvtResult();
 	}
 	
 	@Test
 	public void dateIsToday() {
 		long expectedDate = new Date().getTime();
-		long actualDate = results.date().getTime();
+		long actualDate = result.date().getTime();
 		
 		long difference = Math.abs(expectedDate - actualDate);
 		
@@ -29,19 +29,19 @@ public class PvtResultsDefaultsTest {
 	
 	@Test
 	public void errorCountIsZero() {
-		assertEquals(results.errorCount(), 0);
+		assertEquals(result.errorCount(), 0);
 	}
 	
 	@Test
 	public void numberOfRoundsIs10() {
-		assertEquals(results.scores().length, 10);
+		assertEquals(result.responseTimes().length, 10);
 	}
 
 	@Test
 	public void scoresIsEmptyArray() {
-		float[] scores = results.scores();
+		float[] responseTimes = result.responseTimes();
 		for (int i = 0; i < 10; i++) {
-			assertEquals(0, scores[i], 0);
+			assertEquals(0, responseTimes[i], 0);
 		}
 	}
 }

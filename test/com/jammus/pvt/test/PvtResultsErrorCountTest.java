@@ -6,13 +6,13 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.jammus.pvt.PvtResults;
+import com.jammus.pvt.PvtResult;
 
 public class PvtResultsErrorCountTest {
 
 	@Test
 	public void canAddErrors() {
-		PvtResults results = new PvtResults();
+		PvtResult results = new PvtResult();
 		results.addError();
 		results.addError();
 		results.addError();
@@ -21,7 +21,7 @@ public class PvtResultsErrorCountTest {
 
 	@Test
 	public void errorCountCanBeConfiguredAtConstruction() {
-		PvtResults results = new PvtResults(new Date(), new float[] { }, 45);
+		PvtResult results = new PvtResult(new Date(), new float[] { }, 45);
 		assertEquals(results.errorCount(), 45);
 	}
 }

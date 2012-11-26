@@ -9,7 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.jammus.pvt.PvtResults;
+import com.jammus.pvt.PvtResult;
 import com.jammus.pvt.data.PvtResultsDataStore;
 
 public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
@@ -20,7 +20,7 @@ public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
 		this.resultsDatabase = new PvtResultsSQLiteDatabase(context);
 	}
 
-	public void save(PvtResults result) {
+	public void save(PvtResult result) {
 		SQLiteDatabase db = resultsDatabase.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();
@@ -30,7 +30,7 @@ public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
 		
 		long pvtResultId = db.insertOrThrow(Tables.PvtResults, null, values);
 		
-		saveResponseTimes(db, pvtResultId, result.scores());
+		saveResponseTimes(db, pvtResultId, result.responseTimes());
 	}
 	
 	private void saveResponseTimes(SQLiteDatabase db, long pvtResultId, float[] times) {
@@ -44,21 +44,21 @@ public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
 		}
 	}
 
-	public List<PvtResults> fetchAll() {
+	public List<PvtResult> fetchAll() {
 		String[] columns = { Columns._ID, Columns.DATE, Columns.ERROR_COUNT };
 		String orderBy = Columns.DATE + " DESC";
 		
 		SQLiteDatabase db = resultsDatabase.getReadableDatabase();
 		Cursor cursor = db.query(Tables.PvtResults, columns, null, null, null, null, orderBy);
 		
-		List<PvtResults> results = new ArrayList<PvtResults>();
+		List<PvtResult> results = new ArrayList<PvtResult>();
 		
 		while (cursor.moveToNext()) {
 			long pvtResultId = cursor.getLong(0);
 			Date date = new Date(cursor.getLong(1));
 			int errors = cursor.getInt(2);
 			float[] times = fetchTimes(pvtResultId);
-			PvtResults result = new PvtResults(date, times, errors);
+			PvtResult result = new PvtResult(date, times, errors);
 			results.add(result);
 		}
 		

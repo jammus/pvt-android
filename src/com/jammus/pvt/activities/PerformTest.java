@@ -1,7 +1,7 @@
 package com.jammus.pvt.activities;
 
 import com.jammus.pvt.R;
-import com.jammus.pvt.PvtResults;
+import com.jammus.pvt.PvtResult;
 import com.jammus.pvt.data.PvtResultsDataStore;
 import com.jammus.pvt.data.sqlite.PvtResultsSQLiteDataStore;
 import com.jammus.pvt.views.Pvt;
@@ -15,27 +15,27 @@ public class PerformTest extends Activity {
 	
 	private final int MAX_TESTS = 3;
 	private int testCount = 0;
-	private PvtResults results;
+	private PvtResult result;
 	
 	private PvtResultsDataStore resultsDataStore;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		results = new PvtResults(MAX_TESTS);
+		result = new PvtResult(MAX_TESTS);
 		resultsDataStore = new PvtResultsSQLiteDataStore(this);
 		setContentView(new Pvt(this));
 	}
 
 	public void registerError() {
-		results.addError();
+		result.addError();
 	}
 
 	public void registerScore(float score) {
 		testCount++;
-		results.addScore(score);
+		result.addResponseTime(score);
 		if (isTestComplete()) {
-			resultsDataStore.save(results);
+			resultsDataStore.save(result);
 			showResults();
 		}
 	}
@@ -48,9 +48,9 @@ public class PerformTest extends Activity {
         setContentView(R.layout.activity_results_screen);
         
 		TextView resultsText = (TextView) findViewById(R.id.results);
-		resultsText.setText(String.valueOf(results.averageRt()) + "ms");
+		resultsText.setText(String.valueOf(result.averageRt()) + "ms");
 		
 		TextView errorsText = (TextView) findViewById(R.id.errors);
-		errorsText.setText(String.valueOf(results.errorCount()));
+		errorsText.setText(String.valueOf(result.errorCount()));
 	}
 }

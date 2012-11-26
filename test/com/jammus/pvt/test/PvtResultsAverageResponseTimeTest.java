@@ -7,20 +7,20 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jammus.pvt.PvtResults;
+import com.jammus.pvt.PvtResult;
 
 public class PvtResultsAverageResponseTimeTest {
-	private PvtResults results;;
+	private PvtResult result;
 	
 	@Before
 	public void setUp() {
-		results = new PvtResults();
+		result = new PvtResult();
 	}
 
 	@Test
-	public void emptyResultsThrowsException() {
+	public void emptyResultThrowsException() {
 		try {
-			results.averageRt();
+			result.averageRt();
 		}
 		catch (IllegalStateException e) {
 			return;
@@ -29,40 +29,40 @@ public class PvtResultsAverageResponseTimeTest {
 	}
 	
 	@Test
-	public void singleResultIsAlsoAverateRt() {
-		results.addScore(100.64f);
-		assertEquals(results.averageRt(), 100.64f, 0);
+	public void singleTimeIsAlsoAverateRt() {
+		result.addResponseTime(100.64f);
+		assertEquals(result.averageRt(), 100.64f, 0);
 	}
 	
 	@Test
-	public void multipleIdenticalResultsIsAlsoAverageRt() {
-		results.addScore(410.81f);
-		results.addScore(410.81f);
-		results.addScore(410.81f);
-		results.addScore(410.81f);
-		assertEquals(results.averageRt(), 410.81f, 0);
+	public void multipleIdenticalTimesIsAlsoAverageRt() {
+		result.addResponseTime(410.81f);
+		result.addResponseTime(410.81f);
+		result.addResponseTime(410.81f);
+		result.addResponseTime(410.81f);
+		assertEquals(result.averageRt(), 410.81f, 0);
 	}
 	
 	@Test
-	public void averageRtIsAverageOfAllResults() {
-		results.addScore(234.45f);
-		results.addScore(873.3f);
-		results.addScore(78.0f);
-		results.addScore(927.8f);
-		results.addScore(413.9f);
-		assertEquals(results.averageRt(), 505.49f, 0);
+	public void averageRtIsAverageOfAllTimes() {
+		result.addResponseTime(234.45f);
+		result.addResponseTime(873.3f);
+		result.addResponseTime(78.0f);
+		result.addResponseTime(927.8f);
+		result.addResponseTime(413.9f);
+		assertEquals(result.averageRt(), 505.49f, 0);
 	}
 	
 	@Test
 	public void averageRtIsAverageOfPrepopulatedScores() {
-		float[] scores = new float[] { 
+		float[] times = new float[] { 
 			234.45f,
 			873.3f,
 			78.0f,
 			927.8f,
 			413.9f
 		};
-		results = new PvtResults(new Date(), scores, 0);
-		assertEquals(results.averageRt(), 505.49f, 0);
+		result = new PvtResult(new Date(), times, 0);
+		assertEquals(result.averageRt(), 505.49f, 0);
 	}
 }

@@ -2,7 +2,7 @@ package com.jammus.pvt.activities;
 
 import java.util.List;
 
-import com.jammus.pvt.PvtResults;
+import com.jammus.pvt.PvtResult;
 import com.jammus.pvt.R;
 import com.jammus.pvt.data.PvtResultsDataStore;
 import com.jammus.pvt.data.sqlite.PvtResultsSQLiteDataStore;
@@ -31,9 +31,9 @@ public class ShowResults extends Activity {
     }
     
     private void showResults() {
-    	List<PvtResults> results = resultsDataStore.fetchAll();
+    	List<PvtResult> results = resultsDataStore.fetchAll();
     	StringBuilder sb = new StringBuilder();
-    	for (PvtResults result: results) {
+    	for (PvtResult result: results) {
 	    	sb.append("Date: ").append(result.date());
 	    	sb.append("\nAvg RT: ").append(result.averageRt());
 	    	sb.append("\nErrors: ").append(result.errorCount());
