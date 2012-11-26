@@ -1,7 +1,5 @@
 package com.jammus.pvt.activities;
 
-import java.util.Date;
-
 import com.jammus.pvt.R;
 import com.jammus.pvt.PvtResults;
 import com.jammus.pvt.data.PvtResultsDataStore;
