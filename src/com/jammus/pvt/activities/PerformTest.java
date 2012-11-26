@@ -1,6 +1,9 @@
 package com.jammus.pvt.activities;
 
+import java.util.Date;
+
 import com.jammus.pvt.R;
+import com.jammus.pvt.PvtResults;
 import com.jammus.pvt.views.Pvt;
 
 import android.app.Activity;
@@ -11,26 +14,24 @@ public class PerformTest extends Activity {
 	public boolean showStimulus = false;
 	
 	private final int MAX_TESTS = 3;
-	private int errorCount = 0;
-	private float[] scores;
 	private int testCount = 0;
-	private float mean = 0;
+	private PvtResults results;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		scores = new float[9];
+		results = new PvtResults(new Date(), MAX_TESTS);
 		setContentView(new Pvt(this));
 	}
 
 	public void registerError() {
-		errorCount++;
+		results.addError();
 	}
 
 	public void registerScore(float score) {
-		scores[testCount++] = score;
+		testCount++;
+		results.addScore(score);
 		if (isTestComplete()) {
-			calculateResults();
 			showResults();
 		}
 	}
@@ -39,21 +40,13 @@ public class PerformTest extends Activity {
 		return testCount >= MAX_TESTS;
 	}
 	
-	private void calculateResults() {
-		float total = 0;
-		for (int i = 0; i < testCount; i++) {
-			total += scores[i];
-		}
-		mean = total / (float) testCount;
-	}
-	
 	private void showResults() {
         setContentView(R.layout.activity_results_screen);
         
 		TextView resultsText = (TextView) findViewById(R.id.results);
-		resultsText.setText(String.valueOf(mean) + "ms");
+		resultsText.setText(String.valueOf(results.averageRt()) + "ms");
 		
 		TextView errorsText = (TextView) findViewById(R.id.errors);
-		errorsText.setText(String.valueOf(errorCount));
+		errorsText.setText(String.valueOf(results.errorCount()));
 	}
 }
