@@ -20,7 +20,7 @@ public class PerformTest extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		results = new PvtResults(new Date(), MAX_TESTS);
+		results = new PvtResults(MAX_TESTS);
 		setContentView(new Pvt(this));
 	}
 

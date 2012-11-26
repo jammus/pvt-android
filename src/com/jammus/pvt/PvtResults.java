@@ -8,22 +8,22 @@ public class PvtResults {
 	private Date date;
 	private int scoreIndex;
 	
-	public PvtResults(Date date) {
-		this(date, 10);
+	public PvtResults() {
+		this(10);
 	}
 	
-	public PvtResults(Date date, int rounds) {
-		this.date = date;
+	public PvtResults(int rounds) {
+		this.date = new Date();
 		this.errors = 0;
 		this.scores = new float[rounds];
 		this.scoreIndex = 0;
 	}
 	
-	public PvtResults(Date date, int errors, float[] scores) {
+	public PvtResults(Date date, float[] scores, int errors) {
 		this.date = date;
-		this.errors = errors;
 		this.scores = scores;
-		this.scoreIndex = scores.length + 1;
+		this.scoreIndex = scores.length;
+		this.errors = errors;
 	}
 	
 	public Date date() {
@@ -39,6 +39,9 @@ public class PvtResults {
 	}
 	
 	public float averageRt() {
+		if (scoreIndex <= 0) {
+			throw new IllegalStateException("Cannot calculate averate response time as no test results have been recorded.");
+		}
 		float total = 0;
 		for (int i = 0; i < scoreIndex; i++) {
 			total += scores[i];
