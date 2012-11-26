@@ -1,13 +1,13 @@
-package com.jammus.pvt;
+package com.jammus.pvt.activities;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.jammus.pvt.R;
+import com.jammus.pvt.views.Pvt;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class PerformTestActivity extends Activity {
+public class PerformTest extends Activity {
 	public boolean showStimulus = false;
 	
 	private final int MAX_TESTS = 3;
@@ -20,7 +20,7 @@ public class PerformTestActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		scores = new float[9];
-		setContentView(new GraphicsView(this));
+		setContentView(new Pvt(this));
 	}
 
 	public void registerError() {

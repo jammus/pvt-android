@@ -1,20 +1,21 @@
-package com.jammus.pvt;
+package com.jammus.pvt.views;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.jammus.pvt.R;
+import com.jammus.pvt.activities.PerformTest;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class GraphicsView extends View {
+public class Pvt extends View {
 	private Paint circlePaint;
-	private PerformTestActivity testActivity;
+	private PerformTest testActivity;
 	private long startTime;
 	private boolean isStimulusShown;
 	private Random randomGenerator;
@@ -22,10 +23,10 @@ public class GraphicsView extends View {
 	private final int MINIMUM_DELAY = 2000;
 	private final int MAXIMUM_DELAY = 10000;
 	
-	public GraphicsView(Context context) {
+	public Pvt(Context context) {
 		super(context);
 		
-		testActivity = (PerformTestActivity) context;
+		testActivity = (PerformTest) context;
 		
 		int color = getResources().getColor(R.color.stimulus);
 		circlePaint = new Paint();
@@ -51,7 +52,6 @@ public class GraphicsView extends View {
 			@Override
 			public void run() { 
 				startTime = System.nanoTime();
-				Log.d("Start", String.valueOf(startTime));
 				showStimulus();
 			 }
 			

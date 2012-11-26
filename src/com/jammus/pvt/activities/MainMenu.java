@@ -1,4 +1,6 @@
-package com.jammus.pvt;
+package com.jammus.pvt.activities;
+
+import com.jammus.pvt.R;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -6,7 +8,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 
-public class StartScreen extends Activity {
+public class MainMenu extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,7 @@ public class StartScreen extends Activity {
     }
     
     public void startTest(View view) {
-    	Intent intent = new Intent(this, PerformTestActivity.class);
+    	Intent intent = new Intent(this, PerformTest.class);
     	startActivity(intent);
     }
 }

@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".StartScreen"
+            android:name=".activities.MainMenu"
             android:label="@string/title_activity_testing_screen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PerformTestActivity"
+            android:name=".activities.PerformTest"
             >
         </activity>
     </application>
