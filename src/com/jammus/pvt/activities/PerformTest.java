@@ -4,6 +4,8 @@ import java.util.Date;
 
 import com.jammus.pvt.R;
 import com.jammus.pvt.PvtResults;
+import com.jammus.pvt.data.PvtResultsDataStore;
+import com.jammus.pvt.data.sqlite.PvtResultsSQLiteDataStore;
 import com.jammus.pvt.views.Pvt;
 
 import android.app.Activity;
@@ -17,10 +19,13 @@ public class PerformTest extends Activity {
 	private int testCount = 0;
 	private PvtResults results;
 	
+	private PvtResultsDataStore resultsDataStore;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		results = new PvtResults(MAX_TESTS);
+		resultsDataStore = new PvtResultsSQLiteDataStore(this);
 		setContentView(new Pvt(this));
 	}
 
@@ -32,6 +37,7 @@ public class PerformTest extends Activity {
 		testCount++;
 		results.addScore(score);
 		if (isTestComplete()) {
+			resultsDataStore.save(results);
 			showResults();
 		}
 	}
