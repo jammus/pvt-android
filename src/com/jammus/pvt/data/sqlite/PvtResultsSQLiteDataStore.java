@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.jammus.pvt.PvtResults;
 import com.jammus.pvt.data.PvtResultsDataStore;
@@ -49,9 +50,9 @@ public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
 		String orderBy = Columns.DATE + " DESC";
 		Cursor cursor = db.query(Tables.PvtResults, columns, null, null, null, null, orderBy);
 		while (cursor.moveToNext()) {
-			long pvtResultId = cursor.getColumnIndexOrThrow(Columns.PVT_RESULT_ID);
-			Date date = new Date(cursor.getColumnIndexOrThrow(Columns.DATE));
-			int errors = cursor.getColumnIndexOrThrow(Columns.ERROR_COUNT);
+			long pvtResultId = cursor.getLong(0);
+			Date date = new Date(cursor.getLong(1));
+			int errors = cursor.getInt(2);
 			float[] times = fetchTimes(pvtResultId);
 			PvtResults result = new PvtResults(date, times, errors);
 			results.add(result);
@@ -62,13 +63,17 @@ public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
 	private float[] fetchTimes(long pvtResultId) {
 		SQLiteDatabase db = resultsDatabase.getReadableDatabase();
 		String[] columns = { Columns.RESPONSE_TIME };
+		String filter = Columns.PVT_RESULT_ID + " = ?";
 		String orderBy = Columns.TEST_NO;
-		Cursor cursor = db.query(Tables.PvtResultTimes, columns, null, null, null, null, orderBy);
+		String[] args = new String[] { String.valueOf(pvtResultId) };
+		Cursor cursor = db.query(Tables.PvtResultTimes, columns, filter, args, null, null, orderBy);
 		int count = cursor.getCount();
 		float[] times = new float[count];
 		int index = 0;
 		while (cursor.moveToNext()) {
-			times[index] = cursor.getColumnIndexOrThrow(Columns.RESPONSE_TIME);
+			float time = cursor.getFloat(0);
+			Log.d("time (" + String.valueOf(pvtResultId) + ")", String.valueOf(time));
+			times[index++] = time;
 		}
 		return times;
 	}

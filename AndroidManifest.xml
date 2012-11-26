@@ -20,9 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.PerformTest" >
+        </activity>
         <activity
-            android:name=".activities.PerformTest"
-            >
+            android:name=".activities.ShowResults"
+            android:label="@string/title_activity_show_results" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

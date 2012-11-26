@@ -26,4 +26,9 @@ public class MainMenu extends Activity {
     	Intent intent = new Intent(this, PerformTest.class);
     	startActivity(intent);
     }
+    
+    public void showResults(View view) {
+    	Intent intent = new Intent(this, ShowResults.class);
+    	startActivity(intent);
+    }
 }

@@ -4,12 +4,22 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/startButton"
+        android:id="@+id/resultsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/button_start"
-        android:onClick="startTest" />
+        android:onClick="showResults"
+        android:text="@string/button_results" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/resultsButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:onClick="startTest"
+        android:text="@string/button_start" />
 
 </RelativeLayout>
