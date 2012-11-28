@@ -19,9 +19,12 @@ public class PerformTest extends Activity {
 	
 	private PvtResultsDataStore resultsDataStore;
 	
+	private int userId;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		userId = getIntent().getIntExtra("user_id", -1);
 		result = new PvtResult(MAX_TESTS);
 		resultsDataStore = new PvtResultsSQLiteDataStore(this);
 		setContentView(new Pvt(this));
@@ -35,7 +38,7 @@ public class PerformTest extends Activity {
 		testCount++;
 		result.addResponseTime(score);
 		if (isTestComplete()) {
-			resultsDataStore.save(result);
+			resultsDataStore.save(userId, result);
 			showResults();
 		}
 	}

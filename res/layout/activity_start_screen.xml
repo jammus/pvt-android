@@ -25,4 +25,13 @@
         android:onClick="startTest"
         android:text="@string/button_start" />
 
+    <TextView
+        android:id="@+id/username"
+        style="@style/defaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Signed in as: [username]" />
+
 </RelativeLayout>

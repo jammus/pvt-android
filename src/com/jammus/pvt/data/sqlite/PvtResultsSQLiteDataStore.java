@@ -20,10 +20,11 @@ public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
 		this.resultsDatabase = new PvtResultsSQLiteDatabase(context);
 	}
 
-	public void save(PvtResult result) {
+	public void save(int userId, PvtResult result) {
 		SQLiteDatabase db = resultsDatabase.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();
+		values.put(Columns.USER_ID, userId);
 		values.put(Columns.DATE, result.date().getTime());
 		values.put(Columns.AVERAGE_RT, result.averageRt());
 		values.put(Columns.ERROR_COUNT, result.errorCount());
@@ -44,12 +45,14 @@ public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
 		}
 	}
 
-	public List<PvtResult> fetchAll() {
+	public List<PvtResult> fetchAllForUser(int userId) {
 		String[] columns = { Columns._ID, Columns.DATE, Columns.ERROR_COUNT };
+		String filter = Columns.USER_ID + " = ?";
+		String[] args = { String.valueOf(userId) };
 		String orderBy = Columns.DATE + " DESC";
 		
 		SQLiteDatabase db = resultsDatabase.getReadableDatabase();
-		Cursor cursor = db.query(Tables.PvtResults, columns, null, null, null, null, orderBy);
+		Cursor cursor = db.query(Tables.PvtResults, columns, filter, args, null, null, orderBy);
 		
 		List<PvtResult> results = new ArrayList<PvtResult>();
 		

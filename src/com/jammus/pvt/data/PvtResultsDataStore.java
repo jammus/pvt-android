@@ -5,6 +5,6 @@ import java.util.List;
 import com.jammus.pvt.PvtResult;
 
 public interface PvtResultsDataStore {
-	void save(PvtResult result);
-	List<PvtResult> fetchAll();
+	void save(int userId, PvtResult result);
+	List<PvtResult> fetchAllForUser(int userId);
 }

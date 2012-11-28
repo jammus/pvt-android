@@ -15,12 +15,14 @@ import android.widget.TextView;
 public class ShowResults extends Activity {
 	
 	private PvtResultsDataStore resultsDataStore;
+	private int userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resultsDataStore = new PvtResultsSQLiteDataStore(this);
         setContentView(R.layout.activity_show_results);
+        userId = getIntent().getIntExtra("user_id", -1);
         showResults();
     }
 
@@ -31,7 +33,7 @@ public class ShowResults extends Activity {
     }
     
     private void showResults() {
-    	List<PvtResult> results = resultsDataStore.fetchAll();
+    	List<PvtResult> results = resultsDataStore.fetchAllForUser(userId);
     	StringBuilder sb = new StringBuilder();
     	for (PvtResult result: results) {
 	    	sb.append("Date: ").append(result.date());
