@@ -62,6 +62,10 @@ public class PerformTest extends Activity {
 		TextView errorsText = (TextView) findViewById(R.id.errors);
 		errorsText.setText(String.valueOf(result.errorCount()));
 		
+		loadReport();
+	}
+	
+	private void loadReport() {
 		new FetchReportTask().execute(result);
 	}
 	
@@ -80,4 +84,5 @@ public class PerformTest extends Activity {
 		}
 	
 	}
+	
 }
