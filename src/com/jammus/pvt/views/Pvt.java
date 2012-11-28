@@ -19,6 +19,7 @@ public class Pvt extends View {
 	private long startTime;
 	private boolean isStimulusShown;
 	private Random randomGenerator;
+	private int backgroundColor;
 	
 	private final int MINIMUM_DELAY = 2000;
 	private final int MAXIMUM_DELAY = 10000;
@@ -28,9 +29,10 @@ public class Pvt extends View {
 		
 		testActivity = (PerformTest) context;
 		
-		int color = getResources().getColor(R.color.stimulus);
+		backgroundColor = getResources().getColor(R.color.background);
+		int stimulusColor = getResources().getColor(R.color.stimulus);
 		circlePaint = new Paint();
-		circlePaint.setColor(color);
+		circlePaint.setColor(stimulusColor);
 		
 		randomGenerator = new Random();
 		
@@ -62,6 +64,7 @@ public class Pvt extends View {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
+		canvas.drawColor(backgroundColor);
 		if (isStimulusShown) {
 			drawStimulus(canvas);
 		}

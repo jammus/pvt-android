@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical" >
 
     <TextView
@@ -9,12 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/heading_results"
+        style="@style/defaultText"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/results"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/defaultText"
         android:text="" />
 
     <TextView
@@ -22,12 +25,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/heading_errors"
+        style="@style/defaultText"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/errors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/defaultText"
         android:text="" />
 
 </LinearLayout>
