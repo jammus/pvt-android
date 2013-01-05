@@ -13,14 +13,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class PerformTest extends Activity {
-	public boolean showStimulus = false;
-	
 	private final int MAX_TESTS = 2;
 	private int testCount = 0;
 	private PvtResult result;
-	
 	private PvtResultsDataStore localResultsDataStore;
-	
 	private int userId;
 	
 	@Override
@@ -39,6 +35,7 @@ public class PerformTest extends Activity {
 	public void registerScore(float score) {
 		testCount++;
 		result.addResponseTime(score);
+		
 		if (isTestComplete()) {
 			saveResults();
 			showResults();
