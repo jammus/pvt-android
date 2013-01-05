@@ -1,4 +1,4 @@
-package com.jammus.pvt;
+package com.jammus.pvt.core;
 
 public class User {
 

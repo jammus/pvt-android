@@ -1,4 +1,4 @@
-package com.jammus.pvt.data.sqlite;
+package com.jammus.pvt.android.data.sqlite;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,8 +9,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.jammus.pvt.PvtResult;
-import com.jammus.pvt.data.PvtResultsDataStore;
+import com.jammus.pvt.android.data.PvtResultsDataStore;
+import com.jammus.pvt.core.PvtResult;
 
 public class PvtResultsSQLiteDataStore implements PvtResultsDataStore {
 	

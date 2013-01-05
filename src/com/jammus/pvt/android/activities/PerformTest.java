@@ -1,11 +1,11 @@
-package com.jammus.pvt.activities;
+package com.jammus.pvt.android.activities;
 
 import com.jammus.pvt.R;
-import com.jammus.pvt.PvtResult;
-import com.jammus.pvt.data.PvtResultsDataStore;
-import com.jammus.pvt.data.PvtResultsSubmission;
-import com.jammus.pvt.data.sqlite.PvtResultsSQLiteDataStore;
-import com.jammus.pvt.views.Pvt;
+import com.jammus.pvt.android.data.PvtResultsDataStore;
+import com.jammus.pvt.android.data.PvtResultsSubmission;
+import com.jammus.pvt.android.data.sqlite.PvtResultsSQLiteDataStore;
+import com.jammus.pvt.android.views.Pvt;
+import com.jammus.pvt.core.PvtResult;
 
 import android.app.Activity;
 import android.os.AsyncTask;

@@ -7,7 +7,7 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jammus.pvt.PvtResult;
+import com.jammus.pvt.core.PvtResult;
 
 public class PvtResultsAverageResponseTimeTest {
 	private PvtResult result;

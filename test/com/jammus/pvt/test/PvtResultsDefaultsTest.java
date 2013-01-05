@@ -2,7 +2,8 @@ package com.jammus.pvt.test;
 
 import java.util.Date;
 
-import com.jammus.pvt.PvtResult;
+import com.jammus.pvt.core.PvtResult;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;

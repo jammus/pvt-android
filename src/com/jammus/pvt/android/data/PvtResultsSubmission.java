@@ -1,4 +1,4 @@
-package com.jammus.pvt.data;
+package com.jammus.pvt.android.data;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.jammus.pvt.PvtResult;
+import com.jammus.pvt.core.PvtResult;
 
 public class PvtResultsSubmission {
 	private static final String POST_URL = "http://ec2-176-34-215-74.eu-west-1.compute.amazonaws.com:8080/report/";

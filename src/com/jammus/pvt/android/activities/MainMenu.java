@@ -1,9 +1,9 @@
-package com.jammus.pvt.activities;
+package com.jammus.pvt.android.activities;
 
 import java.util.Random;
 
 import com.jammus.pvt.R;
-import com.jammus.pvt.User;
+import com.jammus.pvt.core.User;
 
 import android.os.Bundle;
 import android.app.Activity;

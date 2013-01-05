@@ -1,11 +1,11 @@
-package com.jammus.pvt.views;
+package com.jammus.pvt.android.views;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.jammus.pvt.R;
-import com.jammus.pvt.activities.PerformTest;
+import com.jammus.pvt.android.activities.PerformTest;
 
 import android.content.Context;
 import android.graphics.Canvas;

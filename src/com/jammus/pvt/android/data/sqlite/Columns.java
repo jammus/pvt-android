@@ -1,4 +1,4 @@
-package com.jammus.pvt.data.sqlite;
+package com.jammus.pvt.android.data.sqlite;
 
 import android.provider.BaseColumns;
 
