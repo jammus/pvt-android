@@ -9,5 +9,6 @@
     <string name="heading_errors">Errors</string>
     <string name="button_results">Show Results</string>
     <string name="title_activity_show_results">Results</string>
+    <string name="heading_report">Report</string>
 
 </resources>
