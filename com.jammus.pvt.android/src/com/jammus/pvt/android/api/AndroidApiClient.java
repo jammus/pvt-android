@@ -23,13 +23,12 @@ import com.jammus.pvt.api.ApiClient;
 import com.jammus.pvt.api.ApiResponse;
 import com.jammus.pvt.api.ApiTransportException;
 import com.jammus.pvt.core.PvtResult;
-import com.jammus.pvt.core.User;
 
 public class AndroidApiClient implements ApiClient {
 	private static final String BASE_URL = "http://pvt-api.eu01.aws.af.cm";
 	
-	public String submitResult(User user, PvtResult result) throws ApiTransportException {
-		List<NameValuePair> postParams = prepareParameters(user, result);
+	public String submitResult(String accessToken, PvtResult result) throws ApiTransportException {
+		List<NameValuePair> postParams = prepareParameters(accessToken, result);
 		return post("/report", postParams).message();
 	}
 	
@@ -84,9 +83,9 @@ public class AndroidApiClient implements ApiClient {
 		}
 	}
 	
-	private List<NameValuePair> prepareParameters(User user, PvtResult result) {
+	private List<NameValuePair> prepareParameters(String accessToken, PvtResult result) {
 		List<NameValuePair> postParams = new ArrayList<NameValuePair>(4);
-		postParams.add(new BasicNameValuePair("access_token", String.valueOf(user.token())));
+		postParams.add(new BasicNameValuePair("access_token", accessToken));
 		postParams.add(new BasicNameValuePair("date", String.valueOf(result.date())));
 		postParams.add(new BasicNameValuePair("errorCount", String.valueOf(result.errorCount())));
 		postParams.add(new BasicNameValuePair("averageRt", String.valueOf(result.averageRt())));

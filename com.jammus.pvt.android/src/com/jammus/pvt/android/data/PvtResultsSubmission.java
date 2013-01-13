@@ -1,17 +1,21 @@
 package com.jammus.pvt.android.data;
 
-import com.jammus.pvt.android.api.AndroidApiClient;
+import com.jammus.pvt.api.ApiClient;
+import com.jammus.pvt.api.ApiTransportException;
 import com.jammus.pvt.core.PvtResult;
-import com.jammus.pvt.core.User;
 
 public class PvtResultsSubmission {
-	private AndroidApiClient client;
+	private ApiClient client;
 	
-	public PvtResultsSubmission(AndroidApiClient client)
-	{
+	public PvtResultsSubmission(ApiClient client) {
 		this.client = client;
 	}
 	
-	public String submit(User user, PvtResult result) {}
-
+	public String submit(String accessToken, PvtResult result) {
+		try {
+			return client.submitResult(accessToken, result);
+		} catch (ApiTransportException e) {
+			return e.getMessage();
+		}
+	}
 }

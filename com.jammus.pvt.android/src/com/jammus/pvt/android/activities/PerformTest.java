@@ -1,6 +1,7 @@
 package com.jammus.pvt.android.activities;
 
 import com.jammus.pvt.R;
+import com.jammus.pvt.android.api.AndroidApiClient;
 import com.jammus.pvt.android.data.PvtResultsDataStore;
 import com.jammus.pvt.android.data.PvtResultsSubmission;
 import com.jammus.pvt.android.data.sqlite.PvtResultsSQLiteDataStore;
@@ -17,12 +18,15 @@ public class PerformTest extends Activity {
 	private int testCount = 0;
 	private PvtResult result;
 	private PvtResultsDataStore localResultsDataStore;
+	private String accessToken;
 	private int userId;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		userId = getIntent().getIntExtra("user_id", -1);
+		
+		accessToken = getIntent().getExtras().getString("access_token", "");
+		userId = getIntent().getIntExtra("userId", -1);
 		result = new PvtResult(MAX_TESTS);
 		localResultsDataStore = new PvtResultsSQLiteDataStore(this);
 		setContentView(new Pvt(this));
@@ -70,8 +74,8 @@ public class PerformTest extends Activity {
 
 		@Override
 		protected String doInBackground(PvtResult... params) {
-			PvtResultsSubmission submission = new PvtResultsSubmission();
-			return submission.submit(userId, params[0]);
+			PvtResultsSubmission submission = new PvtResultsSubmission(new AndroidApiClient());
+			return submission.submit(accessToken, params[0]);
 		}
 		
 		@Override
