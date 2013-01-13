@@ -8,7 +8,7 @@
         android:targetSdkVersion="15" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -27,6 +27,15 @@
         <activity
             android:name=".android.activities.ShowResults"
             android:label="@string/title_activity_show_results" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".android.activities.Login"
+            android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

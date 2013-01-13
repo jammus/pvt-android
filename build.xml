@@ -89,4 +89,35 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
+    <target name="junits">
+        <property name="src.dir" value="./src" />
+        <property name="test.dir" value="./test" />
+        <property name="test.output" value="./output" />
+        <property name="lib" value="./libs" />
+        <property name="test.lib" value="../PVTTest/lib" />
+        <property name="classes" value="./classes" />
+<path id="test.classpath">
+  <pathelement location="${classes}" />
+  <pathelement location="/usr/share/java/junit.jar" />
+  <pathelement location="." />
+  <pathelement location="${src.dir}" />
+  <pathelement location="${test.dir}" />
+  <fileset dir="${lib}">
+    <include name="**/*.jar"/>
+  </fileset>
+  <fileset dir="${test.lib}">
+    <include name="**/*.jar"/>
+  </fileset>
+</path>
+        <junit printsummary="yes" haltonfailure="yes">
+            <batchtest fork="yes" todir="${test.output}">
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test.java" />
+                    <include name="**/Test*.java" />
+                </fileset>
+            </batchtest>
+            <formatter type="xml" />
+            <classpath refid="test.classpath" />
+        </junit>
+    </target>
 </project>

@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
+
+		    <TextView
+		        android:id="@+id/newUserQuestionHeading"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+		        android:text="@string/heading_new_user_question"
+		        android:textAppearance="?android:attr/textAppearanceLarge" />
+		
+		
+            <Button
+                android:id="@+id/createAccountButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+                android:layout_marginTop="14dp"
+                android:layout_below="@id/newUserQuestionHeading"
+                android:text="@string/button_create_new_account" />
+            
+            <TextView
+                android:id="@+id/existingUserHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/heading_existing_user_question"
+                android:layout_below="@id/createAccountButton"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:id="@+id/loginEmail"
+                android:layout_below="@+id/existingUserHeading"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="@string/label_email"
+                android:inputType="textEmailAddress" />
+
+
+            <EditText
+                android:id="@+id/loginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/loginEmail"
+                android:hint="@string/label_password"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/loginPassword"
+                android:text="@string/button_login" />
+
+
+</RelativeLayout>
