@@ -1,4 +1,4 @@
-package com.jammus.pvt.test;
+package com.jammus.pvttest.core;
 
 import static org.junit.Assert.*;
 
