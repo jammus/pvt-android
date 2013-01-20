@@ -21,7 +21,11 @@ public class PvtApi {
 		postParams.put("errors", String.valueOf(result.errorCount()));
 		postParams.put("response_times", responseTimesToString(result.responseTimes()));
 		
-		return apiClient.post("/report", postParams).message();
+		ApiResponse response = apiClient.post("/report", postParams);
+		if (response !=  null) {
+			return response.message();
+		}
+		return null;
 	}
 	
 	private String responseTimesToString(float[] times) {
