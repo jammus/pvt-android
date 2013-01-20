@@ -25,7 +25,7 @@ public class PerformTest extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		accessToken = getIntent().getExtras().getString("access_token", "");
+		accessToken = getIntent().getStringExtra("access_token");
 		userId = getIntent().getIntExtra("userId", -1);
 		result = new PvtResult(MAX_TESTS);
 		localResultsDataStore = new PvtResultsSQLiteDataStore(this);
