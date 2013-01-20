@@ -86,10 +86,9 @@ public class AndroidApiClient implements ApiClient {
 	private List<NameValuePair> prepareParameters(String accessToken, PvtResult result) {
 		List<NameValuePair> postParams = new ArrayList<NameValuePair>(4);
 		postParams.add(new BasicNameValuePair("access_token", accessToken));
-		postParams.add(new BasicNameValuePair("date", String.valueOf(result.date())));
-		postParams.add(new BasicNameValuePair("errorCount", String.valueOf(result.errorCount())));
-		postParams.add(new BasicNameValuePair("averageRt", String.valueOf(result.averageRt())));
-		postParams.add(new BasicNameValuePair("responseTimes", responseTimesToString(result.responseTimes())));
+		postParams.add(new BasicNameValuePair("timestamp", String.valueOf(result.date().getTime() / 1000)));
+		postParams.add(new BasicNameValuePair("errors", String.valueOf(result.errorCount())));
+		postParams.add(new BasicNameValuePair("response_times", responseTimesToString(result.responseTimes())));
 		return postParams;
 	}
 	
