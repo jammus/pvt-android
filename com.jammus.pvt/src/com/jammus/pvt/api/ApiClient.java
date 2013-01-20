@@ -1,7 +1,7 @@
 package com.jammus.pvt.api;
 
-import com.jammus.pvt.core.PvtResult;
+import java.util.Dictionary;
 
 public interface ApiClient {
-	String submitResult(String accessToken, PvtResult result) throws ApiTransportException;
+	ApiResponse post(String url, Dictionary<String, String> parameters) throws ApiTransportException;
 }

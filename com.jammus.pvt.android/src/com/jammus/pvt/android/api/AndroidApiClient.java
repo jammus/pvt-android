@@ -21,12 +21,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.jammus.pvt.api.ApiClient;
 import com.jammus.pvt.api.ApiResponse;
 import com.jammus.pvt.api.ApiTransportException;
-import com.jammus.pvt.api.BaseApiClient;
 
-public class AndroidApiClient extends BaseApiClient {
-	protected ApiResponse post(String url, Dictionary<String, String> params) throws ApiTransportException {
+public class AndroidApiClient implements ApiClient {
+	protected static final String BASE_URL = "http://pvt-api.eu01.aws.af.cm";
+	
+	public ApiResponse post(String url, Dictionary<String, String> params) throws ApiTransportException {
 		List<NameValuePair> postParams = new ArrayList<NameValuePair>(4);
 		Enumeration<String> enumeration = params.keys();
 		while (enumeration.hasMoreElements()) {

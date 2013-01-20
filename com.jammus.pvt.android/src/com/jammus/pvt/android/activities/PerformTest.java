@@ -6,6 +6,7 @@ import com.jammus.pvt.android.data.PvtResultsDataStore;
 import com.jammus.pvt.android.data.PvtResultsSubmission;
 import com.jammus.pvt.android.data.sqlite.PvtResultsSQLiteDataStore;
 import com.jammus.pvt.android.views.Pvt;
+import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.PvtResult;
 
 import android.app.Activity;
@@ -74,7 +75,8 @@ public class PerformTest extends Activity {
 
 		@Override
 		protected String doInBackground(PvtResult... params) {
-			PvtResultsSubmission submission = new PvtResultsSubmission(new AndroidApiClient());
+			PvtApi pvtApi = new PvtApi(new AndroidApiClient());
+			PvtResultsSubmission submission = new PvtResultsSubmission(pvtApi);
 			return submission.submit(accessToken, params[0]);
 		}
 		

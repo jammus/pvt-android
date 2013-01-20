@@ -5,9 +5,13 @@ import java.util.Hashtable;
 
 import com.jammus.pvt.core.PvtResult;
 
-public abstract class BaseApiClient implements ApiClient {
+public class PvtApi {
 	
-	protected static final String BASE_URL = "http://pvt-api.eu01.aws.af.cm";
+	private ApiClient apiClient;
+	
+	public PvtApi(ApiClient apiClient) {
+		this.apiClient = apiClient;
+	}
 
 	public String submitResult(String accessToken, PvtResult result) throws ApiTransportException {
 		Dictionary<String, String> postParams = new Hashtable<String, String>();
@@ -17,7 +21,7 @@ public abstract class BaseApiClient implements ApiClient {
 		postParams.put("errors", String.valueOf(result.errorCount()));
 		postParams.put("response_times", responseTimesToString(result.responseTimes()));
 		
-		return post("/report", postParams).message();
+		return apiClient.post("/report", postParams).message();
 	}
 	
 	private String responseTimesToString(float[] times) {
@@ -30,6 +34,4 @@ public abstract class BaseApiClient implements ApiClient {
 		}
 		return sb.toString();
 	}
-	
-	abstract protected ApiResponse post(String url, Dictionary<String, String> parameters) throws ApiTransportException;
 }
