@@ -126,23 +126,31 @@ public class MainMenu extends Activity {
 
     private void onLogInResult(LogInResult result) {
 		TextView loginMessageView = (TextView) findViewById(R.id.loginValidationMessage);
+		
 		if (result.hasError(LogInResult.INVALID_EMAIL_OR_PASSWORD)) {
 			loginMessageView.setText(R.string.incorrect_login_details_message);
 			loginMessageView.setVisibility(TextView.VISIBLE);
 			return;
-		} else if (!result.isOk()) {
+		} 
+		
+		if (!result.isOk()) {
 			loginMessageView.setText(R.string.could_not_process_login_details_message);
 			loginMessageView.setVisibility(TextView.VISIBLE);
 			return;
 		}
 		
+		user = result.user();
+		
+		saveUserPreferences(user);
+		showMainMenu(user);  	
+    }
+    
+    private void saveUserPreferences(User user) {
 		SharedPreferences settings = getSharedPreferences(USER_PREFS, 0);
 		Editor settingsEditor = settings.edit();
-		settingsEditor.putString("email", result.user().email());
-		settingsEditor.putString("token", result.user().token());
+		settingsEditor.putString("email", user.email());
+		settingsEditor.putString("token", user.token());
 		settingsEditor.commit();
-		
-		showMainMenu(user);  	
     }
     
     public void startCreateUser(View view) {
