@@ -13,19 +13,14 @@ public class PvtApi {
 		this.apiClient = apiClient;
 	}
 
-	public String submitResult(String accessToken, PvtResult result) throws ApiTransportException {
-		Dictionary<String, String> postParams = new Hashtable<String, String>();
+	public ApiResponse submitResult(String accessToken, PvtResult result) throws ApiTransportException {
+		Dictionary<String, String> parameters = new Hashtable<String, String>();
+		parameters.put("access_token", accessToken);
+		parameters.put("timestamp", String.valueOf(result.date().getTime() / 1000));
+		parameters.put("errors", String.valueOf(result.errorCount()));
+		parameters.put("response_times", responseTimesToString(result.responseTimes()));
 		
-		postParams.put("access_token", accessToken);
-		postParams.put("timestamp", String.valueOf(result.date().getTime() / 1000));
-		postParams.put("errors", String.valueOf(result.errorCount()));
-		postParams.put("response_times", responseTimesToString(result.responseTimes()));
-		
-		ApiResponse response = apiClient.post("/report", postParams);
-		if (response !=  null) {
-			return response.message();
-		}
-		return null;
+		return apiClient.post("/report", parameters);
 	}
 	
 	private String responseTimesToString(float[] times) {
@@ -37,5 +32,14 @@ public class PvtApi {
 			sb.append(String.valueOf(times[index]));
 		}
 		return sb.toString();
+	}
+
+	public ApiResponse createAccount(String name, String email, String password) throws ApiTransportException {
+		Dictionary<String, String> parameters = new Hashtable<String, String>();
+		parameters.put("name", name);
+		parameters.put("email", email);
+		parameters.put("password", password);
+		
+		return apiClient.post("/users", parameters);
 	}
 }

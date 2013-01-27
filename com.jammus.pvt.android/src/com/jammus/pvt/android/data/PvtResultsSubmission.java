@@ -13,7 +13,7 @@ public class PvtResultsSubmission {
 	
 	public String submit(String accessToken, PvtResult result) {
 		try {
-			return pvtApi.submitResult(accessToken, result);
+			return pvtApi.submitResult(accessToken, result).message();
 		} catch (ApiTransportException e) {
 			return e.getMessage();
 		}
