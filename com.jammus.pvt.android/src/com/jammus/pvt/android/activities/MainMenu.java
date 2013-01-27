@@ -1,12 +1,19 @@
 package com.jammus.pvt.android.activities;
 
 import com.jammus.pvt.R;
+import com.jammus.pvt.android.api.AndroidApiClient;
+import com.jammus.pvt.api.ApiClient;
+import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.User;
+import com.jammus.pvt.interactors.LogInResult;
+import com.jammus.pvt.interactors.LogInUser;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -25,10 +32,14 @@ public class MainMenu extends Activity {
         if (user == null) {
 	        setContentView(R.layout.activity_login);
         } else {
-	        setContentView(R.layout.activity_start_screen);
-	        TextView usernameView = (TextView) findViewById(R.id.username);
-	        usernameView.setText("Signed in as: " + user.email());
+        	showMainMenu(user);
         }
+    }
+    
+    private void showMainMenu(User user) {
+        setContentView(R.layout.activity_start_screen);
+        TextView usernameView = (TextView) findViewById(R.id.username);
+        usernameView.setText("Signed in as: " + user.email());
     }
 
     @Override
@@ -51,19 +62,12 @@ public class MainMenu extends Activity {
     
     private User fetchUser() {
         SharedPreferences settings = getSharedPreferences(USER_PREFS, 0);
-        int userId = settings.getInt("user_id", -1);
         String email = settings.getString("email", "");
         String token = settings.getString("token", "");
-        if (userId <= 0 || token == "") {
+        if (email == ""|| token == "") {
         	return null;
-        	/*userId = new Random().nextInt(3000);
-        	username = "guest" + String.valueOf(userId);
-        	Editor settingsEditor = settings.edit();
-        	settingsEditor.putInt("user_id", userId);
-        	settingsEditor.putString("username", username);
-        	settingsEditor.commit();*/
         }
-        return new User(userId, email, token);
+        return new User(-1, email, token);
     }
     
     public void login(View view) {
@@ -86,6 +90,40 @@ public class MainMenu extends Activity {
     		loginMessageView.setVisibility(TextView.VISIBLE);
     		return;
     	}
+    	
+    	new AsyncTask<String, Void, LogInResult>() {
+
+			@Override
+			protected LogInResult doInBackground(String... params) {
+		    	ApiClient apiClient = new AndroidApiClient();
+		    	PvtApi pvtApi = new PvtApi(apiClient);
+		    	LogInUser logInUser = new LogInUser(pvtApi);
+		    	return logInUser.execute(params[0], params[1]);
+			}
+			
+			protected void onPostExecute(LogInResult result) {
+		    	TextView loginMessageView = (TextView) findViewById(R.id.loginValidationMessage);
+		    	if (result.hasError(LogInResult.INVALID_EMAIL_OR_PASSWORD)) {
+		    		loginMessageView.setText(R.string.incorrect_login_details_message);
+		    		loginMessageView.setVisibility(TextView.VISIBLE);
+		    		return;
+		    	} else if (!result.isOk()) {
+		    		loginMessageView.setText(R.string.could_not_process_login_details_message);
+		    		loginMessageView.setVisibility(TextView.VISIBLE);
+		    		return;
+		    	}
+		    	
+		        SharedPreferences settings = getSharedPreferences(USER_PREFS, 0);
+		    	Editor settingsEditor = settings.edit();
+		    	settingsEditor.putString("email", result.user().email());
+		    	settingsEditor.putString("token", result.user().token());
+		    	settingsEditor.commit();
+		    	
+		    	showMainMenu(user);
+			}
+			
+    	}.execute(email, password);
+    	
     }
     
     public void startCreateUser(View view) {

@@ -43,7 +43,11 @@ public class PvtApi {
 		return apiClient.post("/users", parameters);
 	}
 
-	public ApiResponse authenticateUser(String email, String password) {
-		return new ApiResponse(500, "");
+	public ApiResponse authenticateUser(String email, String password) throws ApiTransportException {
+		Dictionary<String, String> parameters = new Hashtable<String, String>();
+		parameters.put("email", email);
+		parameters.put("password", password);
+		
+		return apiClient.post("/login", parameters);
 	}
 }

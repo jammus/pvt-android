@@ -1,5 +1,8 @@
 package com.jammus.pvt.api;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ApiResponse {
 	private final int code;
 	private final String message;
@@ -15,5 +18,13 @@ public class ApiResponse {
 	
 	public int code() {
 		return code;
+	}
+
+	public JSONObject json() {
+		try {
+			return new JSONObject(message);
+		} catch (JSONException e) {
+			return new JSONObject();
+		}
 	}
 }
