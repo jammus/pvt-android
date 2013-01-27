@@ -2,4 +2,5 @@
 <resources>
     <color name="stimulus">#FFFFFFFF</color>
     <color name="background">#FF6FA8DC</color>
+    <color name="invalid_entry">#aa0000</color>
 </resources>

@@ -16,5 +16,8 @@
     <string name="heading_existing_user_question">Existing user?</string>
     <string name="heading_new_user_question">New user?</string>
     <string name="button_create_new_account">Create New Account</string>
+    <string name="invalid_login_details_message">Please enter a valid email address and password</string>
+    <string name="incorrect_login_details_message">Incorrect email/password. Please try again.</string>
+    <string name="could_not_process_login_details_message">There was a problem contacting our servers. Please try again.</string>
 
 </resources>

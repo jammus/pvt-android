@@ -1,7 +1,5 @@
 package com.jammus.pvt.android.activities;
 
-import java.util.Random;
-
 import com.jammus.pvt.R;
 import com.jammus.pvt.core.User;
 
@@ -9,9 +7,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainMenu extends Activity {
@@ -66,5 +64,31 @@ public class MainMenu extends Activity {
         	settingsEditor.commit();*/
         }
         return new User(userId, email, token);
+    }
+    
+    public void login(View view) {
+    	boolean hasErrors = false;
+    	
+    	TextView loginMessageView = (TextView) findViewById(R.id.loginValidationMessage);
+    	loginMessageView.setVisibility(TextView.INVISIBLE);
+    	
+    	EditText emailView = (EditText) findViewById(R.id.loginEmail);
+    	String email = emailView.getText().toString().trim();
+    	
+    	EditText passwordView = (EditText) findViewById(R.id.loginPassword);
+    	String password = passwordView.getText().toString().trim();
+    	
+    	hasErrors |= email.isEmpty();
+    	hasErrors |= password.isEmpty();
+    	
+    	if (hasErrors) {
+    		loginMessageView.setText(R.string.invalid_login_details_message);
+    		loginMessageView.setVisibility(TextView.VISIBLE);
+    		return;
+    	}
+    }
+    
+    public void startCreateUser(View view) {
+        setContentView(R.layout.activity_create_user);
     }
 }

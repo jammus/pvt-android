@@ -42,4 +42,8 @@ public class PvtApi {
 		
 		return apiClient.post("/users", parameters);
 	}
+
+	public ApiResponse authenticateUser(String email, String password) {
+		return new ApiResponse(500, "");
+	}
 }

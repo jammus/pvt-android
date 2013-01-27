@@ -3,6 +3,7 @@ package com.jammus.pvt.core;
 import java.util.Date;
 
 public class PvtResult {
+	
 	private float[] responseTimes;
 	private int errors;
 	private Date date;
@@ -56,4 +57,5 @@ public class PvtResult {
 	public float[] responseTimes() {
 		return responseTimes;
 	}
+	
 }

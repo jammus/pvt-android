@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp" >
+    android:paddingRight="10dp"
+    android:visibility="visible" >
 
 		    <TextView
 		        android:id="@+id/newUserQuestionHeading"
@@ -22,6 +23,7 @@
 		        android:layout_alignParentLeft="true"
                 android:layout_marginTop="14dp"
                 android:layout_below="@id/newUserQuestionHeading"
+                android:onClick="startCreateAccount"
                 android:text="@string/button_create_new_account" />
             
             <TextView
@@ -57,7 +59,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/loginPassword"
+                android:onClick="login"
                 android:text="@string/button_login" />
 
+            <TextView
+                android:id="@+id/loginValidationMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/loginEmail"
+                android:layout_alignRight="@+id/loginEmail"
+                android:layout_below="@+id/existingUserHeading"
+                android:text="@string/invalid_login_details_message"
+                android:textColor="@color/invalid_entry"
+                android:visibility="invisible" />
 
 </RelativeLayout>
