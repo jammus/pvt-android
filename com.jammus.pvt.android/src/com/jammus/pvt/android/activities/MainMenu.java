@@ -11,6 +11,7 @@ import com.jammus.pvt.interactors.LogInUser;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -91,39 +92,57 @@ public class MainMenu extends Activity {
     		return;
     	}
     	
-    	new AsyncTask<String, Void, LogInResult>() {
+    	new LogInTask(this).execute(email, password);
+    }
+        	
+	class LogInTask extends AsyncTask<String, Void, LogInResult> {
+		
+		private ProgressDialog progressDialog;
+		
+		public LogInTask(Activity context) {
+			progressDialog = new ProgressDialog(context);
+		}
+		
+		protected void onPreExecute() {
+			progressDialog.setTitle("Please Wait");
+			progressDialog.setMessage("Logging you in...");
+			progressDialog.show();
+		}
+		
+		@Override
+		protected LogInResult doInBackground(String... params) {
+	    	ApiClient apiClient = new AndroidApiClient();
+	    	PvtApi pvtApi = new PvtApi(apiClient);
+	    	LogInUser logInUser = new LogInUser(pvtApi);
+	    	return logInUser.execute(params[0], params[1]);
+		}
+		
+		protected void onPostExecute(LogInResult result) {
+	    	progressDialog.dismiss();
+	    	onLogInResult(result);
+		}
+		
+	}
 
-			@Override
-			protected LogInResult doInBackground(String... params) {
-		    	ApiClient apiClient = new AndroidApiClient();
-		    	PvtApi pvtApi = new PvtApi(apiClient);
-		    	LogInUser logInUser = new LogInUser(pvtApi);
-		    	return logInUser.execute(params[0], params[1]);
-			}
-			
-			protected void onPostExecute(LogInResult result) {
-		    	TextView loginMessageView = (TextView) findViewById(R.id.loginValidationMessage);
-		    	if (result.hasError(LogInResult.INVALID_EMAIL_OR_PASSWORD)) {
-		    		loginMessageView.setText(R.string.incorrect_login_details_message);
-		    		loginMessageView.setVisibility(TextView.VISIBLE);
-		    		return;
-		    	} else if (!result.isOk()) {
-		    		loginMessageView.setText(R.string.could_not_process_login_details_message);
-		    		loginMessageView.setVisibility(TextView.VISIBLE);
-		    		return;
-		    	}
-		    	
-		        SharedPreferences settings = getSharedPreferences(USER_PREFS, 0);
-		    	Editor settingsEditor = settings.edit();
-		    	settingsEditor.putString("email", result.user().email());
-		    	settingsEditor.putString("token", result.user().token());
-		    	settingsEditor.commit();
-		    	
-		    	showMainMenu(user);
-			}
-			
-    	}.execute(email, password);
-    	
+    private void onLogInResult(LogInResult result) {
+		TextView loginMessageView = (TextView) findViewById(R.id.loginValidationMessage);
+		if (result.hasError(LogInResult.INVALID_EMAIL_OR_PASSWORD)) {
+			loginMessageView.setText(R.string.incorrect_login_details_message);
+			loginMessageView.setVisibility(TextView.VISIBLE);
+			return;
+		} else if (!result.isOk()) {
+			loginMessageView.setText(R.string.could_not_process_login_details_message);
+			loginMessageView.setVisibility(TextView.VISIBLE);
+			return;
+		}
+		
+		SharedPreferences settings = getSharedPreferences(USER_PREFS, 0);
+		Editor settingsEditor = settings.edit();
+		settingsEditor.putString("email", result.user().email());
+		settingsEditor.putString("token", result.user().token());
+		settingsEditor.commit();
+		
+		showMainMenu(user);  	
     }
     
     public void startCreateUser(View view) {
