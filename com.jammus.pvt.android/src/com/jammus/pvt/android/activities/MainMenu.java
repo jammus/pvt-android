@@ -71,28 +71,29 @@ public class MainMenu extends Activity {
         return new User(-1, email, token);
     }
     
-    public void login(View view) {
-    	boolean hasErrors = false;
+    public void submitLogInForm(View view) {
+    	boolean isFormValid = true;
     	
     	TextView loginMessageView = (TextView) findViewById(R.id.loginValidationMessage);
     	loginMessageView.setVisibility(TextView.INVISIBLE);
     	
     	EditText emailView = (EditText) findViewById(R.id.loginEmail);
     	String email = emailView.getText().toString().trim();
+    	if (email.isEmpty() || ! android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+    		emailView.setError(getString(R.string.invalid_login_email_error));
+    		isFormValid = false;
+    	}
     	
     	EditText passwordView = (EditText) findViewById(R.id.loginPassword);
     	String password = passwordView.getText().toString().trim();
-    	
-    	hasErrors |= email.isEmpty();
-    	hasErrors |= password.isEmpty();
-    	
-    	if (hasErrors) {
-    		loginMessageView.setText(R.string.invalid_login_details_message);
-    		loginMessageView.setVisibility(TextView.VISIBLE);
-    		return;
+    	if (password.isEmpty()) {
+    		passwordView.setError(getString(R.string.invalid_login_password_error));
+    		isFormValid = false;
     	}
     	
-    	new LogInTask(this).execute(email, password);
+    	if (isFormValid) {
+	    	new LogInTask(this).execute(email, password);
+    	}
     }
         	
 	class LogInTask extends AsyncTask<String, Void, LogInResult> {
@@ -153,7 +154,9 @@ public class MainMenu extends Activity {
 		settingsEditor.commit();
     }
     
-    public void startCreateUser(View view) {
-        setContentView(R.layout.activity_create_user);
+    public void startCreateAccount(View view) {
+    	Intent intent = new Intent(this, CreateUser.class);
+    	startActivity(intent);
     }
+    
 }

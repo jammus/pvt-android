@@ -15,9 +15,21 @@
     <string name="button_login">Log in</string>
     <string name="heading_existing_user_question">Existing user?</string>
     <string name="heading_new_user_question">New user?</string>
-    <string name="button_create_new_account">Create New Account</string>
+    <string name="button_create_new_account">Sign Up</string>
     <string name="invalid_login_details_message">Please enter a valid email address and password</string>
     <string name="incorrect_login_details_message">Incorrect email/password. Please try again.</string>
     <string name="could_not_process_login_details_message">There was a problem contacting our servers. Please try again.</string>
+    <string name="heading_create_user">Sign Up</string>
+    <string name="heading_user_details">Enter your details</string>
+    <string name="label_name">Name</string>
+    <string name="heading_user_password">Choose a password</string>
+    <string name="label_confirm_password">Confirm password</string>
+    <string name="button_confirm_signup">Sign Up</string>
+    <string name="title_activity_create_user">Sign Up</string>
+    <string name="invalid_user_email_error">Please enter a valid email address</string>
+    <string name="invalid_user_name_error">Please enter your name</string>
+    <string name="invalid_user_password_error">Passwords must match and be more than 8 letters long</string>
+    <string name="invalid_login_email_error">Please enter your email address</string>
+    <string name="invalid_login_password_error">Please enter your password</string>
 
 </resources>
