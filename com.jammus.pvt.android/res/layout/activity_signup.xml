@@ -7,7 +7,7 @@
     android:orientation="vertical" >
     
     <TextView
-        android:id="@+id/createUserHeading"
+        android:id="@+id/signUpHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,75 +17,75 @@
 
 
   	<TextView
-      	android:id="@+id/userDetailsHeading"
+      	android:id="@+id/signUpDetailsHeading"
       	android:layout_width="wrap_content"
       	android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
       	android:layout_marginTop="10dp"
       	android:text="@string/heading_user_details"
-      	android:layout_below="@id/createUserHeading"
+      	android:layout_below="@id/signUpHeading"
       	android:textAppearance="?android:attr/textAppearanceMedium" />
   	
     <TextView
-        android:id="@+id/createAccountValidationMessage"
+        android:id="@+id/signUpResultMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userName"
-        android:layout_alignRight="@+id/userName"
-        android:layout_above="@+id/userName"
+        android:layout_alignLeft="@+id/signUpName"
+        android:layout_alignRight="@+id/signUpName"
+        android:layout_above="@+id/signUpName"
         android:textColor="@color/invalid_entry"
         android:visibility="invisible" />
 
 	<EditText
-	    android:id="@+id/userName"
+	    android:id="@+id/signUpName"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/userDetailsHeading"
+	    android:layout_below="@+id/signUpDetailsHeading"
 	    android:layout_marginTop="15dp"
 	    android:hint="@string/label_name"
 	    android:inputType="textPersonName" />
 	
 	<EditText
-      	android:id="@+id/userEmail"
-      	android:layout_below="@+id/userName"
+      	android:id="@+id/signUpEmail"
+      	android:layout_below="@+id/signUpName"
       	android:layout_width="fill_parent"
       	android:layout_height="wrap_content"
       	android:hint="@string/label_email"
       	android:inputType="textEmailAddress" />
 
   	<TextView
-      	android:id="@+id/userPasswordHeading"
+      	android:id="@+id/signUpPasswordHeading"
       	android:layout_width="wrap_content"
       	android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
       	android:layout_marginTop="10dp"
       	android:text="@string/heading_user_password"
-      	android:layout_below="@id/userEmail"
+      	android:layout_below="@id/signUpEmail"
       	android:textAppearance="?android:attr/textAppearanceMedium" />
   	
 	<EditText
-	    android:id="@+id/userPassword"
+	    android:id="@+id/signUpPassword"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="15dp"
-	    android:layout_below="@id/userPasswordHeading"
+	    android:layout_below="@id/signUpPasswordHeading"
 	    android:hint="@string/label_password"
 	    android:inputType="textPassword" />
 	
 	<EditText
-	    android:id="@+id/userConfirmPassword"
+	    android:id="@+id/signUpConfirmPassword"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@id/userPassword"
+	    android:layout_below="@id/signUpPassword"
 	    android:hint="@string/label_confirm_password"
 	    android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/userCreateButton"
+        android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userConfirmPassword"
-        android:onClick="submitCreateAccountForm"
+        android:layout_below="@id/signUpConfirmPassword"
+        android:onClick="submitSignUpForm"
         android:text="@string/button_confirm_signup" />
 
 </RelativeLayout>

@@ -8,40 +8,40 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CreateUser extends Activity {
+public class SignUp extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_user);
+        setContentView(R.layout.activity_signup);
     }
     
-    public void submitCreateAccountForm(View view) {
+    public void submitSignUpForm(View view) {
     	boolean isFormValid = true;
     	
-    	TextView createFailureMessageView = (TextView) findViewById(R.id.createAccountValidationMessage);
+    	TextView createFailureMessageView = (TextView) findViewById(R.id.signUpResultMessage);
     	createFailureMessageView.setVisibility(View.INVISIBLE);
     	
-    	EditText nameView = (EditText) findViewById(R.id.userName);
+    	EditText nameView = (EditText) findViewById(R.id.signUpName);
     	String name = nameView.getText().toString().trim();
     	if (name.isEmpty()) {
-    		nameView.setError(getString(R.string.invalid_user_name_error));
+    		nameView.setError(getString(R.string.invalid_signup_name_error));
     		isFormValid = false;
     	}
     	
-    	EditText emailView = (EditText) findViewById(R.id.userEmail);
+    	EditText emailView = (EditText) findViewById(R.id.signUpEmail);
     	String email = emailView.getText().toString().trim();
     	if (email.isEmpty() || ! android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-    		emailView.setError(getString(R.string.invalid_user_email_error));
+    		emailView.setError(getString(R.string.invalid_signup_email_error));
     		isFormValid = false;
     	}
     	
-    	EditText passwordView = (EditText) findViewById(R.id.userPassword);
+    	EditText passwordView = (EditText) findViewById(R.id.signUpPassword);
     	String password = passwordView.getText().toString();
-    	EditText confirmPasswordView = (EditText) findViewById(R.id.userConfirmPassword);
+    	EditText confirmPasswordView = (EditText) findViewById(R.id.signUpConfirmPassword);
     	String confirmPassword = confirmPasswordView.getText().toString();
     	if (password.length() < 8 || password != confirmPassword) {
-    		passwordView.setError(getString(R.string.invalid_user_password_error));
+    		passwordView.setError(getString(R.string.invalid_signup_password_error));
     		isFormValid = false;
     	}
     	

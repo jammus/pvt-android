@@ -23,7 +23,7 @@
 		        android:layout_alignParentLeft="true"
                 android:layout_marginTop="14dp"
                 android:layout_below="@id/newUserQuestionHeading"
-                android:onClick="startCreateAccount"
+                android:onClick="startSignUp"
                 android:text="@string/button_create_new_account" />
             
             <TextView

@@ -26,9 +26,9 @@
     <string name="label_confirm_password">Confirm password</string>
     <string name="button_confirm_signup">Sign Up</string>
     <string name="title_activity_create_user">Sign Up</string>
-    <string name="invalid_user_email_error">Please enter a valid email address</string>
-    <string name="invalid_user_name_error">Please enter your name</string>
-    <string name="invalid_user_password_error">Passwords must match and be more than 8 letters long</string>
+    <string name="invalid_signup_email_error">Please enter a valid email address</string>
+    <string name="invalid_signup_name_error">Please enter your name</string>
+    <string name="invalid_signup_password_error">Passwords must match and be more than 8 letters long</string>
     <string name="invalid_login_email_error">Please enter your email address</string>
     <string name="invalid_login_password_error">Please enter your password</string>
 

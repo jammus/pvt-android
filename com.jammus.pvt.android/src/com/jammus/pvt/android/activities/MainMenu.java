@@ -141,7 +141,6 @@ public class MainMenu extends Activity {
 		}
 		
 		user = result.user();
-		
 		saveUserPreferences(user);
 		showMainMenu(user);  	
     }
@@ -154,8 +153,8 @@ public class MainMenu extends Activity {
 		settingsEditor.commit();
     }
     
-    public void startCreateAccount(View view) {
-    	Intent intent = new Intent(this, CreateUser.class);
+    public void startSignUp(View view) {
+    	Intent intent = new Intent(this, SignUp.class);
     	startActivity(intent);
     }
     
