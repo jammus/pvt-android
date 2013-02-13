@@ -12,7 +12,7 @@ import android.app.Activity;
 import android.view.Menu;
 import android.widget.TextView;
 
-public class ShowResults extends Activity {
+public class ShowResultsActivity extends Activity {
 	
 	private PvtResultsDataStore resultsDataStore;
 	private int userId;

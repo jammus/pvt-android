@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.jammus.pvt.R;
-import com.jammus.pvt.android.activities.PerformTest;
+import com.jammus.pvt.android.activities.PerformTestActivity;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -15,7 +15,7 @@ import android.view.View;
 
 public class Pvt extends View {
 	private Paint circlePaint;
-	private PerformTest testActivity;
+	private PerformTestActivity testActivity;
 	private long startTime;
 	private boolean isStimulusShown;
 	private Random randomGenerator;
@@ -27,7 +27,7 @@ public class Pvt extends View {
 	public Pvt(Context context) {
 		super(context);
 		
-		testActivity = (PerformTest) context;
+		testActivity = (PerformTestActivity) context;
 		
 		backgroundColor = getResources().getColor(R.color.background);
 		int stimulusColor = getResources().getColor(R.color.stimulus);

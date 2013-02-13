@@ -31,5 +31,7 @@
     <string name="invalid_signup_password_error">Passwords must match and be more than 8 letters long</string>
     <string name="invalid_login_email_error">Please enter your email address</string>
     <string name="invalid_login_password_error">Please enter your password</string>
+    <string name="existing_account_error">That email address has already been used to sign up</string>
+    <string name="could_not_process_signup">There was an error processing your sign up. Please try again.</string>
 
 </resources>

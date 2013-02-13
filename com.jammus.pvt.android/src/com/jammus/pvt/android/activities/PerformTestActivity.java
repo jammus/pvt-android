@@ -14,7 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class PerformTest extends Activity {
+public class PerformTestActivity extends Activity {
 	private final int MAX_TESTS = 2;
 	private int testCount = 0;
 	private PvtResult result;

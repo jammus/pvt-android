@@ -2,6 +2,8 @@ package com.jammus.pvt.android.activities;
 
 import com.jammus.pvt.R;
 import com.jammus.pvt.android.api.AndroidApiClient;
+import com.jammus.pvt.android.data.UserDataStore;
+import com.jammus.pvt.android.data.sharedpreferences.UserSharedPreferencesDataStore;
 import com.jammus.pvt.api.ApiClient;
 import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.User;
@@ -20,16 +22,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainMenu extends Activity {
-	
-	private static final String USER_PREFS = "UserPrefs";
+public class MainMenuActivity extends Activity {
 	
 	private User user;
+	
+	private UserDataStore userDataStore;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = fetchUser();
+    	userDataStore = new UserSharedPreferencesDataStore(this);
+        user = userDataStore.fetchUser();
         if (user == null) {
 	        setContentView(R.layout.activity_login);
         } else {
@@ -50,27 +53,15 @@ public class MainMenu extends Activity {
     }
     
     public void startTest(View view) {
-    	Intent intent = new Intent(this, PerformTest.class);
+    	Intent intent = new Intent(this, PerformTestActivity.class);
     	intent.putExtra("user_id", user.id());
     	startActivity(intent);
     }
     
     public void showResults(View view) {
-    	Intent intent = new Intent(this, ShowResults.class);
+    	Intent intent = new Intent(this, ShowResultsActivity.class);
     	intent.putExtra("user_id", user.id());
     	startActivity(intent);
-    }
-    
-    private User fetchUser() {
-        SharedPreferences settings = getSharedPreferences(USER_PREFS, 0);
-        int id = settings.getInt("id", -1);
-        String name = settings.getString("name", "");
-        String email = settings.getString("email", "");
-        String token = settings.getString("token", "");
-        if (email == ""|| token == "") {
-        	return null;
-        }
-        return new User(id, email, name, token);
     }
     
     public void submitLogInForm(View view) {
@@ -136,27 +127,24 @@ public class MainMenu extends Activity {
 			return;
 		} 
 		
-		if (!result.isOk()) {
+		if ( ! result.isOk()) {
 			loginMessageView.setText(R.string.could_not_process_login_details_message);
 			loginMessageView.setVisibility(TextView.VISIBLE);
 			return;
 		}
 		
 		user = result.user();
-		saveUserPreferences(user);
+		
+		saveUser(user);
 		showMainMenu(user);  	
     }
     
-    private void saveUserPreferences(User user) {
-		SharedPreferences settings = getSharedPreferences(USER_PREFS, 0);
-		Editor settingsEditor = settings.edit();
-		settingsEditor.putString("email", user.email());
-		settingsEditor.putString("token", user.token());
-		settingsEditor.commit();
+    private void saveUser(User user) {
+    	userDataStore.saveUser(user);
     }
     
     public void startSignUp(View view) {
-    	Intent intent = new Intent(this, SignUp.class);
+    	Intent intent = new Intent(this, SignUpActivity.class);
     	startActivity(intent);
     }
     

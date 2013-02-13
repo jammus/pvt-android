@@ -26,7 +26,7 @@ public class User {
 		return token;
 	}
 
-	public Object name() {
+	public String name() {
 		return name;
 	}
 	
