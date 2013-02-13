@@ -63,12 +63,14 @@ public class MainMenu extends Activity {
     
     private User fetchUser() {
         SharedPreferences settings = getSharedPreferences(USER_PREFS, 0);
+        int id = settings.getInt("id", -1);
+        String name = settings.getString("name", "");
         String email = settings.getString("email", "");
         String token = settings.getString("token", "");
         if (email == ""|| token == "") {
         	return null;
         }
-        return new User(-1, email, token);
+        return new User(id, email, name, token);
     }
     
     public void submitLogInForm(View view) {

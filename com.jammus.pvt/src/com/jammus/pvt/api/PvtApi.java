@@ -50,4 +50,8 @@ public class PvtApi {
 		
 		return apiClient.post("/login", parameters);
 	}
+
+	public ApiResponse signUp(String name, String email, String password) {
+		return new ApiResponse(0, "");
+	}
 }

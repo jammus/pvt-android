@@ -20,14 +20,14 @@ public class ApiResponseTest {
 	@Test
 	public void testJsonMessagesCanBeDecoded() throws JSONException {
 		ApiResponse response = new ApiResponse(200, "{ \"message\": \"Hello\" } ");
-		JSONObject json = response.json();
+		JSONObject json = response.toJson();
 		assertEquals("Hello", json.getString("message"));
 	}
 	
 	@Test
 	public void testInvalidJsonReturnsEmptyObject() {
 		ApiResponse response = new ApiResponse(200, "");
-		JSONObject json = response.json();
+		JSONObject json = response.toJson();
 		assertNotNull(json);
 	}
 }

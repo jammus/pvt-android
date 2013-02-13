@@ -1,8 +1,10 @@
 package com.jammus.pvt.interactors;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.jammus.pvt.api.ApiResponse;
+import com.jammus.pvt.api.ApiResponseUserTransformer;
 import com.jammus.pvt.api.ApiTransportException;
 import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.User;
@@ -24,26 +26,25 @@ public class LogInUser {
 			return new LogInResult(LogInResult.UNKNOWN_ERROR);
 		}
 		
-		if (response != null && response.code() == 200) {
-			String token = decodeToken(response);
-			User user = new User(0, email, token);
-			return new LogInResult(null, user);
-		}
-		
 		if (response != null && response.code() == 401) {
 			return new LogInResult(LogInResult.INVALID_EMAIL_OR_PASSWORD);
 		} 
 		
+		if (response != null && response.code() == 200) {
+			return decodeResponse(response);
+		}
+		
 		return new LogInResult(LogInResult.UNKNOWN_ERROR);
 	}
 	
-	private String decodeToken(ApiResponse response) {
-		try {
-			return response.json().getString("access_token");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			return "";
+	private LogInResult decodeResponse(ApiResponse response) {
+		User user = ApiResponseUserTransformer.transform(response);
+		
+		if (user == null) {
+			return new LogInResult(LogInResult.INVALID_RESPONSE);
 		}
+		
+		return new LogInResult(null, user);
 	}
 	
 }

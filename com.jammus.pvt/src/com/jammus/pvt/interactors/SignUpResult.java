@@ -5,23 +5,23 @@ import java.util.List;
 
 import com.jammus.pvt.core.User;
 
-public class LogInResult extends Result {
+public class SignUpResult extends Result {
 
-	public static final int INVALID_EMAIL_OR_PASSWORD = -20001;
+	public static final int DUPLICATE_ACCOUNT = -30001;
 	
-	public static final int INVALID_RESPONSE = -20002;
+	public static final int INVALID_DETAILS = -30002;
 	
 	private final User user;
 
-	public LogInResult() {
+	public SignUpResult() {
 		this(null, null);
 	}
 
-	public LogInResult(int error) {
+	public SignUpResult(int error) {
 		this(Arrays.asList(error), null);
 	}
 	
-	public LogInResult(List<Integer> errors, User user) {
+	public SignUpResult(List<Integer> errors, User user) {
 		super(errors);
 		this.user = user;
 	}

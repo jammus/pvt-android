@@ -20,7 +20,7 @@ public class ApiResponse {
 		return code;
 	}
 
-	public JSONObject json() {
+	public JSONObject toJson() {
 		try {
 			return new JSONObject(message);
 		} catch (JSONException e) {
