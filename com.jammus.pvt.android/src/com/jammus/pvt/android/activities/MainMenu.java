@@ -6,7 +6,7 @@ import com.jammus.pvt.api.ApiClient;
 import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.User;
 import com.jammus.pvt.interactors.LogInResult;
-import com.jammus.pvt.interactors.LogInUser;
+import com.jammus.pvt.interactors.LogIn;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -116,7 +116,7 @@ public class MainMenu extends Activity {
 		protected LogInResult doInBackground(String... params) {
 	    	ApiClient apiClient = new AndroidApiClient();
 	    	PvtApi pvtApi = new PvtApi(apiClient);
-	    	LogInUser logInUser = new LogInUser(pvtApi);
+	    	LogIn logInUser = new LogIn(pvtApi);
 	    	return logInUser.execute(params[0], params[1]);
 		}
 		

@@ -12,19 +12,19 @@ import com.jammus.pvt.api.ApiResponse;
 import com.jammus.pvt.api.ApiTransportException;
 import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.interactors.LogInResult;
-import com.jammus.pvt.interactors.LogInUser;
+import com.jammus.pvt.interactors.LogIn;
 
-public class LogInUserTest {
+public class LogInTest {
 
 	@Mock
 	private PvtApi pvtApi;
 	
-	private LogInUser logInUser;
+	private LogIn logInUser;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		logInUser = new LogInUser(pvtApi);
+		logInUser = new LogIn(pvtApi);
 	}
 	
 	@Test

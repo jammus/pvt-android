@@ -1,19 +1,16 @@
 package com.jammus.pvt.interactors;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.jammus.pvt.api.ApiResponse;
 import com.jammus.pvt.api.ApiResponseUserTransformer;
 import com.jammus.pvt.api.ApiTransportException;
 import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.User;
 
-public class LogInUser {
+public class LogIn {
 	
 	private PvtApi pvtApi;
 
-	public LogInUser(PvtApi pvtApi) {
+	public LogIn(PvtApi pvtApi) {
 		this.pvtApi = pvtApi;
 	}
 
