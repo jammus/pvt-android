@@ -32,17 +32,4 @@ public class PvtResultsDefaultsTest {
 	public void errorCountIsZero() {
 		assertEquals(result.errorCount(), 0);
 	}
-	
-	@Test
-	public void numberOfRoundsIs10() {
-		assertEquals(result.responseTimes().length, 10);
-	}
-
-	@Test
-	public void scoresIsEmptyArray() {
-		float[] responseTimes = result.responseTimes();
-		for (int i = 0; i < 10; i++) {
-			assertEquals(0, responseTimes[i], 0);
-		}
-	}
 }

@@ -1,29 +1,28 @@
 package com.jammus.pvt.core;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class PvtResult {
 	
-	private float[] responseTimes;
+	private List<Float> responseTimes;
 	private int errors;
 	private Date date;
-	private int timeIndex;
 	
 	public PvtResult() {
-		this(10);
-	}
-	
-	public PvtResult(int rounds) {
 		this.date = new Date();
 		this.errors = 0;
-		this.responseTimes = new float[rounds];
-		this.timeIndex = 0;
+		this.responseTimes = new ArrayList<Float>();
 	}
 	
 	public PvtResult(Date date, float[] responseTimes, int errors) {
 		this.date = date;
-		this.responseTimes = responseTimes;
-		this.timeIndex = responseTimes.length;
+		this.responseTimes = new ArrayList<Float>();
+		for (float responseTime : responseTimes) {
+			this.responseTimes.add(Float.valueOf(responseTime));
+		}
 		this.errors = errors;
 	}
 	
@@ -36,18 +35,18 @@ public class PvtResult {
 	}
 	
 	public void addResponseTime(float responseTime) {
-		responseTimes[timeIndex++] = responseTime;
+		responseTimes.add(responseTime);
 	}
 	
 	public float averageRt() {
-		if (timeIndex <= 0) {
-			throw new IllegalStateException("Cannot calculate average response time as no test results have been recorded.");
+		if (responseTimes.size() <= 0) {
+			return 0;
 		}
 		float total = 0;
-		for (int i = 0; i < timeIndex; i++) {
-			total += responseTimes[i];
+		for (int i = 0; i < responseTimes.size(); i++) {
+			total += responseTimes.get(i).floatValue();
 		}
-		return  total / timeIndex;
+		return total / responseTimes.size();
 	}
 	
 	public int errorCount() {
@@ -55,7 +54,11 @@ public class PvtResult {
 	}
 	
 	public float[] responseTimes() {
-		return responseTimes;
+		float[] times = new float[responseTimes.size()];
+		for (int i = 0; i < responseTimes.size(); i++) {
+			times[i] = responseTimes.get(i).floatValue();
+		}
+		return times;
 	}
 	
 }

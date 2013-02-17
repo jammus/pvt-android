@@ -15,12 +15,12 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class PerformTestActivity extends Activity {
-	private final int MAX_TESTS = 2;
-	private int testCount = 0;
+	private static final long TEST_DURATION_NS = 10 * 60 * 1000 * 1000000l; // m * s * ms * ns
 	private PvtResult result;
 	private PvtResultsDataStore localResultsDataStore;
 	private String accessToken;
 	private int userId;
+	private long startTime;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,8 @@ public class PerformTestActivity extends Activity {
 		
 		accessToken = getIntent().getStringExtra("access_token");
 		userId = getIntent().getIntExtra("userId", -1);
-		result = new PvtResult(MAX_TESTS);
+		startTime = System.nanoTime();
+		result = new PvtResult();
 		localResultsDataStore = new PvtResultsSQLiteDataStore(this);
 		setContentView(new PvtView(this));
 	}
@@ -38,17 +39,20 @@ public class PerformTestActivity extends Activity {
 	}
 
 	public void registerScore(float score) {
-		testCount++;
 		result.addResponseTime(score);
 		
 		if (isTestComplete()) {
-			saveResults();
-			showResults();
+			finishTest();
 		}
 	}
 	
+	public void finishTest() {
+		saveResults();
+		showResults();
+	}
+	
 	public boolean isTestComplete() {
-		return testCount >= MAX_TESTS;
+		return (System.nanoTime() - startTime) > TEST_DURATION_NS;
 	}
 	
 	private void saveResults() {
@@ -64,7 +68,7 @@ public class PerformTestActivity extends Activity {
 		TextView errorsText = (TextView) findViewById(R.id.errors);
 		errorsText.setText(String.valueOf(result.errorCount()));
 		
-		loadReport();
+		// loadReport();
 	}
 	
 	private void loadReport() {

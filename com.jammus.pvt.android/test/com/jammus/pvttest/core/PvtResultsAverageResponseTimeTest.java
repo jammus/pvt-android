@@ -18,14 +18,8 @@ public class PvtResultsAverageResponseTimeTest {
 	}
 
 	@Test
-	public void emptyResultThrowsException() {
-		try {
-			result.averageRt();
-		}
-		catch (IllegalStateException e) {
-			return;
-		}
-		fail("Requesting averageRt should throw when no tests taken.");
+	public void emptyResultIsZero() {
+		assertEquals(result.averageRt(), 0, 0);
 	}
 	
 	@Test

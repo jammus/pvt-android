@@ -21,8 +21,11 @@ public class PvtView extends View {
 	private Random randomGenerator;
 	private int backgroundColor;
 	
-	private final int MINIMUM_DELAY = 2000;
-	private final int MAXIMUM_DELAY = 10000;
+	private static final int MINIMUM_DELAY_MS = 1000;
+	private static final int MAXIMUM_DELAY_MS = 2500;
+	private static final int STIMULUS_TIMEOUT_MS = 1000;
+	
+	private TimerTask timeoutTask;
 	
 	public PvtView(Context context) {
 		super(context);
@@ -40,8 +43,26 @@ public class PvtView extends View {
 	}
 	
 	private void showStimulus() {
+		startTime = System.nanoTime();
 		isStimulusShown = true;
+		timeoutTask = new TimerTask() {
+
+			@Override
+			public void run() {
+				timeoutStimulus();
+			}
+			
+		};
+		new Timer().schedule(timeoutTask, STIMULUS_TIMEOUT_MS);
 		postInvalidate();
+	}
+	
+	private void timeoutStimulus() {
+		registerError();
+		hideStimulus();
+		if ( ! testActivity.isTestComplete()) {
+			scheduleStimulus();
+		}
 	}
 	
 	private void hideStimulus() {
@@ -51,14 +72,14 @@ public class PvtView extends View {
 	
 	private void scheduleStimulus() {
 		TimerTask task = new TimerTask() {
+			
 			@Override
 			public void run() { 
-				startTime = System.nanoTime();
 				showStimulus();
 			 }
 			
 		};
-		int delay = randomGenerator.nextInt(MAXIMUM_DELAY - MINIMUM_DELAY) + MINIMUM_DELAY;
+		int delay = randomGenerator.nextInt(MAXIMUM_DELAY_MS - MINIMUM_DELAY_MS) + MINIMUM_DELAY_MS;
 		new Timer().schedule(task, delay);
 	}
 	
@@ -67,6 +88,9 @@ public class PvtView extends View {
 		canvas.drawColor(backgroundColor);
 		if (isStimulusShown) {
 			drawStimulus(canvas);
+		}
+		else if (testActivity.isTestComplete()) {
+			testActivity.finishTest();
 		}
 	}
 	
@@ -78,10 +102,10 @@ public class PvtView extends View {
 			return true;
 		}
 		if (isStimulusShown) {
-			float score = calculateScore();
-			testActivity.registerScore(score);
+			timeoutTask.cancel();
+			registerScore();
 			hideStimulus();
-			if (! testActivity.isTestComplete()) {
+			if ( ! testActivity.isTestComplete()) {
 				scheduleStimulus();
 			}
 		}
@@ -89,6 +113,15 @@ public class PvtView extends View {
 			testActivity.registerError();
 		}
 		return true;
+	}
+	
+	private void registerScore() {
+		float score = calculateScore();
+		testActivity.registerScore(score);
+	}
+	
+	private void registerError() {
+		testActivity.registerError();
 	}
 	
 	private float calculateScore() {
