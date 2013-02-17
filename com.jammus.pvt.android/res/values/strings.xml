@@ -33,5 +33,9 @@
     <string name="invalid_login_password_error">Please enter your password</string>
     <string name="existing_account_error">That email address has already been used to sign up</string>
     <string name="could_not_process_signup">There was an error processing your sign up. Please try again.</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_log_in">LogInActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="splash_loading">Loading…</string>
 
 </resources>

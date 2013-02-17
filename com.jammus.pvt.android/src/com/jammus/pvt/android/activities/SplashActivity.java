@@ -9,40 +9,37 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
-import android.view.View;
-import android.widget.TextView;
 
-public class MainMenuActivity extends Activity {
-	
-	private User user;
-	
+public class SplashActivity extends Activity {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
         
     	UserDataStore userDataStore = new UserSharedPreferencesDataStore(this);
-        user = userDataStore.fetchUser();
+        User user = userDataStore.fetchUser();
         
-        setContentView(R.layout.activity_start_screen);
-        TextView usernameView = (TextView) findViewById(R.id.username);
-        usernameView.setText("Signed in as: " + user.email());
+        if (user == null) {
+	        startLogIn();
+        } else {
+        	startMainMenu();
+        }
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_testing_screen, menu);
+        getMenuInflater().inflate(R.menu.activity_splash, menu);
         return true;
     }
     
-    public void startTest(View view) {
-    	Intent intent = new Intent(this, PerformTestActivity.class);
-    	intent.putExtra("user_id", user.id());
+    private void startLogIn() {
+    	Intent intent = new Intent(this, LogInActivity.class);
     	startActivity(intent);
     }
     
-    public void showResults(View view) {
-    	Intent intent = new Intent(this, ShowResultsActivity.class);
-    	intent.putExtra("user_id", user.id());
+    private void startMainMenu() {
+    	Intent intent = new Intent(this, MainMenuActivity.class);
     	startActivity(intent);
     }
     

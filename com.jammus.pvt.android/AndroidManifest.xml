@@ -16,35 +16,31 @@
         <activity
             android:name=".android.activities.MainMenuActivity"
             android:label="@string/title_activity_testing_screen" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".android.activities.PerformTestActivity" >
         </activity>
         <activity
             android:name=".android.activities.ShowResultsActivity"
             android:label="@string/title_activity_show_results" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".android.activities.Login"
             android:label="@string/title_activity_login" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".android.activities.SignUpActivity"
-            android:label="@string/title_activity_create_user" >
+            android:label="@string/title_activity_create_user"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name=".android.activities.LogInActivity"
+            android:label="@string/title_activity_log_in"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name=".android.activities.SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
