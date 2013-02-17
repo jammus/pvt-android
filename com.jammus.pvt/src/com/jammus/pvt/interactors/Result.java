@@ -28,6 +28,10 @@ public class Result {
 	}
 
 	public boolean hasError(int error) {
+		if (errors == null) {
+			return false;
+		}
+		
 		for (int x: errors) {
 			if (x == error) {
 				return true;

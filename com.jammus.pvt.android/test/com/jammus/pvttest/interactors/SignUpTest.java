@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.jammus.pvt.api.ApiResponse;
+import com.jammus.pvt.api.ApiTransportException;
 import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.User;
 import com.jammus.pvt.interactors.SignUp;
@@ -28,41 +29,48 @@ public class SignUpTest {
 	}
 	
 	@Test
-	public void testSendsDetailsToServer() {
+	public void testSendsDetailsToServer() throws ApiTransportException {
 		signUp.execute("Test User", "user@example.com", "hunter2");
 		verify(pvtApi, times(1)).signUp(eq("Test User"), eq("user@example.com"), eq("hunter2"));
 	}
 
 	@Test
-	public void testResultIncludesDuplicateAccountOn409Response() {
+	public void testResultIncludesDuplicateAccountOn409Response() throws ApiTransportException {
 		when(pvtApi.signUp(anyString(), anyString(), anyString())).thenReturn(new ApiResponse(409, "You already sign up"));
 		SignUpResult result = signUp.execute("Test User", "user@example.com", "hunter2");
 		assertTrue(result.hasError(SignUpResult.DUPLICATE_ACCOUNT));
 	}
 	
 	@Test
-	public void testResultIncludesInvalidDetailsOn400Response() {
+	public void testResultIncludesInvalidDetailsOn400Response() throws ApiTransportException {
 		when(pvtApi.signUp(anyString(), anyString(), anyString())).thenReturn(new ApiResponse(400, "Invalid details"));
 		SignUpResult result = signUp.execute("Test User", "userexample.com", "");
 		assertTrue(result.hasError(SignUpResult.INVALID_DETAILS));
 	}
 	
 	@Test
-	public void testResultIncludesUnknownErrorOn500Response() {
+	public void testResultIncludesUnknownErrorOn500Response() throws ApiTransportException {
 		when(pvtApi.signUp(anyString(), anyString(), anyString())).thenReturn(new ApiResponse(500, "Ruh-roh"));
 		SignUpResult result = signUp.execute("Test User", "user@example.com", "hunter2");
 		assertTrue(result.hasError(SignUpResult.UNKNOWN_ERROR));
 	}
 	
 	@Test
-	public void testResultIsOkOnSuccess() {
+	public void testResultIncludesUnknownErrorOnApiTransportException() throws ApiTransportException {
+		when(pvtApi.signUp(anyString(), anyString(), anyString())).thenThrow(new ApiTransportException(""));
+		SignUpResult result = signUp.execute("Test User", "user@example.com", "hunter2");
+		assertTrue(result.hasError(SignUpResult.UNKNOWN_ERROR));
+	}
+	
+	@Test
+	public void testResultIsOkOnSuccess() throws ApiTransportException {
 		when(pvtApi.signUp(anyString(), anyString(), anyString())).thenReturn(new ApiResponse(200, ""));
 		SignUpResult result = signUp.execute("Test User", "user@example.com", "hunter2");
 		assertTrue(result.isOk());
 	}
 	
 	@Test
-	public void testResultIncludesUserOnSuccess() {
+	public void testResultIncludesUserOnSuccess() throws ApiTransportException {
 		when(pvtApi.signUp(anyString(), anyString(), anyString())).thenReturn(new ApiResponse(200, "{ \"user\": { \"id\": 10001, \"name\": \"Test User\", \"email\": \"user@example.com\" }, \"access_token\": \"token\" }"));
 		SignUpResult result = signUp.execute("Test User", "user@example.com", "hunter2");
 		User user = result.user();

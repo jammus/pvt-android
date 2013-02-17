@@ -34,6 +34,12 @@ public class ResultTest {
 	}
 	
 	@Test
+	public void testDoesNotHaveSuppliedErrorWhenConstructedWithNullErrors() {
+		Result result = new Result(null);
+		assertFalse(result.hasError(ERROR_TYPE_ONE));
+	}
+	
+	@Test
 	public void testDoesHaveSuppliedErrorWhenSpecifiedAtContruction() {
 		Result result = new Result(ERROR_TYPE_ONE);
 		assertTrue(result.hasError(ERROR_TYPE_ONE));

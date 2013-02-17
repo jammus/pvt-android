@@ -34,7 +34,7 @@ public class PvtApi {
 		return sb.toString();
 	}
 
-	public ApiResponse createAccount(String name, String email, String password) throws ApiTransportException {
+	public ApiResponse signUp(String name, String email, String password) throws ApiTransportException {
 		Dictionary<String, String> parameters = new Hashtable<String, String>();
 		parameters.put("name", name);
 		parameters.put("email", email);
@@ -49,9 +49,5 @@ public class PvtApi {
 		parameters.put("password", password);
 		
 		return apiClient.post("/login", parameters);
-	}
-
-	public ApiResponse signUp(String name, String email, String password) {
-		return new ApiResponse(0, "");
 	}
 }

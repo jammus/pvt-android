@@ -2,6 +2,7 @@ package com.jammus.pvt.interactors;
 
 import com.jammus.pvt.api.ApiResponse;
 import com.jammus.pvt.api.ApiResponseUserTransformer;
+import com.jammus.pvt.api.ApiTransportException;
 import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.User;
 
@@ -14,7 +15,13 @@ public class SignUp {
 	}
 
 	public SignUpResult execute(String name, String email, String password) {
-		ApiResponse response = pvtApi.signUp(name, email, password);
+		ApiResponse response;
+		
+		try {
+			response = pvtApi.signUp(name, email, password);
+		} catch (ApiTransportException e) {
+			return new SignUpResult(SignUpResult.UNKNOWN_ERROR);
+		}
 		
 		if (response != null && response.code() == 409) {
 			return new SignUpResult(SignUpResult.DUPLICATE_ACCOUNT);
