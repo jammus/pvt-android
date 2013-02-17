@@ -13,7 +13,7 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Pvt extends View {
+public class PvtView extends View {
 	private Paint circlePaint;
 	private PerformTestActivity testActivity;
 	private long startTime;
@@ -24,7 +24,7 @@ public class Pvt extends View {
 	private final int MINIMUM_DELAY = 2000;
 	private final int MAXIMUM_DELAY = 10000;
 	
-	public Pvt(Context context) {
+	public PvtView(Context context) {
 		super(context);
 		
 		testActivity = (PerformTestActivity) context;

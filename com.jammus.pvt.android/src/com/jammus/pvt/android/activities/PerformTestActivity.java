@@ -5,7 +5,7 @@ import com.jammus.pvt.android.api.AndroidApiClient;
 import com.jammus.pvt.android.data.PvtResultsDataStore;
 import com.jammus.pvt.android.data.PvtResultsSubmission;
 import com.jammus.pvt.android.data.sqlite.PvtResultsSQLiteDataStore;
-import com.jammus.pvt.android.views.Pvt;
+import com.jammus.pvt.android.views.PvtView;
 import com.jammus.pvt.api.PvtApi;
 import com.jammus.pvt.core.PvtResult;
 
@@ -30,7 +30,7 @@ public class PerformTestActivity extends Activity {
 		userId = getIntent().getIntExtra("userId", -1);
 		result = new PvtResult(MAX_TESTS);
 		localResultsDataStore = new PvtResultsSQLiteDataStore(this);
-		setContentView(new Pvt(this));
+		setContentView(new PvtView(this));
 	}
 
 	public void registerError() {
