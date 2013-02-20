@@ -10,9 +10,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.mockito.Mockito.*;
 
-import com.jammus.pvt.api.ApiResponse;
 import com.jammus.pvt.api.ApiTransportException;
-import com.jammus.pvt.api.DuplicateUserException;
 
 public class PvtApiSignUpTest extends PvtApiTestCase {
 	@Rule

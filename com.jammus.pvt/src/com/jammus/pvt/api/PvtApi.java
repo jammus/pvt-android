@@ -50,4 +50,8 @@ public class PvtApi {
 		
 		return apiClient.post("/login", parameters);
 	}
+
+	public ApiResponse fetchReport(String url) throws ApiTransportException {
+		return new ApiResponse(0, "");
+	}
 }
