@@ -17,6 +17,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -26,6 +27,7 @@ import com.jammus.pvt.api.ApiResponse;
 import com.jammus.pvt.api.ApiTransportException;
 
 public class AndroidApiClient implements ApiClient {
+	
 	protected static final String BASE_URL = "http://pvt-api.eu01.aws.af.cm";
 	
 	public ApiResponse post(String url, Dictionary<String, String> params) throws ApiTransportException {
@@ -50,6 +52,27 @@ public class AndroidApiClient implements ApiClient {
 			throw new ApiTransportException(e.getMessage());
 		}
 		
+		return decodeResponse(response);
+	}
+
+	public ApiResponse get(String url) throws ApiTransportException {
+		HttpGet httpGet = new HttpGet(BASE_URL + url);
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpResponse response;
+		
+		try {
+			response = httpClient.execute(httpGet);
+		} catch (ClientProtocolException e) {
+			throw new ApiTransportException(e.getMessage());
+		} catch (IOException e) {
+			throw new ApiTransportException(e.getMessage());
+		}
+		
+		return decodeResponse(response);
+	}
+		
+	private ApiResponse decodeResponse(HttpResponse response) throws ApiTransportException
+	{
 		HttpEntity httpEntity = response.getEntity();
 		if (httpEntity == null) {
 			return null;
@@ -64,6 +87,7 @@ public class AndroidApiClient implements ApiClient {
 		} catch (IOException e) {
 			throw new ApiTransportException(e.getMessage());
 		}
+		
 		try {
 			BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 			StringBuilder sb = new StringBuilder();
@@ -83,5 +107,7 @@ public class AndroidApiClient implements ApiClient {
 		} catch (IOException e) {
 			throw new ApiTransportException(e.getMessage());
 		}
+	
 	}
+	
 }

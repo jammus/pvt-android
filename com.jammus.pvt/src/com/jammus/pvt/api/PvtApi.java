@@ -52,6 +52,7 @@ public class PvtApi {
 	}
 
 	public ApiResponse fetchReport(String url) throws ApiTransportException {
-		return new ApiResponse(0, "");
+		return apiClient.get(url);
 	}
+	
 }

@@ -37,5 +37,7 @@
     <string name="title_activity_log_in">LogInActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="splash_loading">Loading…</string>
+    <string name="report_summary">Your average response time was {{averageRt}}ms. You made {{errors}} error(s) and had {{lapses}} lapse(s).</string>
+    <string name="report_submission_error">There was a problem submitting your results. Please try again later.</string>
 
 </resources>

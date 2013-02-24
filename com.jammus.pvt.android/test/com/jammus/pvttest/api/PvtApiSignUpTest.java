@@ -4,17 +4,13 @@ import static org.junit.Assert.*;
 
 import java.util.Dictionary;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.mockito.Mockito.*;
 
 import com.jammus.pvt.api.ApiTransportException;
 
 public class PvtApiSignUpTest extends PvtApiTestCase {
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
 	
 	@Test
 	public void testPostsToUsersEndpoint() throws ApiTransportException {
@@ -29,4 +25,5 @@ public class PvtApiSignUpTest extends PvtApiTestCase {
 		assertParameterEquals("user@example.com", "email");
 		assertParameterEquals("password", "password");
 	}
+	
 }

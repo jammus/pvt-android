@@ -3,11 +3,16 @@ package com.jammus.pvt.android.activities;
 import com.jammus.pvt.R;
 import com.jammus.pvt.android.api.AndroidApiClient;
 import com.jammus.pvt.android.data.PvtResultsDataStore;
-import com.jammus.pvt.android.data.PvtResultsSubmission;
+import com.jammus.pvt.android.data.UserDataStore;
+import com.jammus.pvt.android.data.sharedpreferences.UserSharedPreferencesDataStore;
 import com.jammus.pvt.android.data.sqlite.PvtResultsSQLiteDataStore;
 import com.jammus.pvt.android.views.PvtView;
 import com.jammus.pvt.api.PvtApi;
+import com.jammus.pvt.core.PvtReport;
 import com.jammus.pvt.core.PvtResult;
+import com.jammus.pvt.core.User;
+import com.jammus.pvt.interactors.SubmitPvt;
+import com.jammus.pvt.interactors.SubmitPvtResult;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -15,19 +20,20 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class PerformTestActivity extends Activity {
-	private static final long TEST_DURATION_NS = 10 * 60 * 1000 * 1000000l; // m * s * ms * ns
+	
+	private static final long TEST_DURATION_NS = (long)(0.5 * 60 * 1000) * 1000000l; // m * s * ms * ns
 	private PvtResult result;
 	private PvtResultsDataStore localResultsDataStore;
-	private String accessToken;
-	private int userId;
 	private long startTime;
+	private User user;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		accessToken = getIntent().getStringExtra("access_token");
-		userId = getIntent().getIntExtra("userId", -1);
+    	UserDataStore userDataStore = new UserSharedPreferencesDataStore(this);
+        user = userDataStore.fetchUser();
+        
 		startTime = System.nanoTime();
 		result = new PvtResult();
 		localResultsDataStore = new PvtResultsSQLiteDataStore(this);
@@ -56,7 +62,7 @@ public class PerformTestActivity extends Activity {
 	}
 	
 	private void saveResults() {
-		localResultsDataStore.save(userId, result);
+		localResultsDataStore.save(user.id(), result);
 	}
 	
 	private void showResults() {
@@ -68,26 +74,36 @@ public class PerformTestActivity extends Activity {
 		TextView errorsText = (TextView) findViewById(R.id.errors);
 		errorsText.setText(String.valueOf(result.errorCount()));
 		
-		// loadReport();
+		loadReport();
 	}
 	
 	private void loadReport() {
 		new FetchReportTask().execute(result);
 	}
 	
-	private class FetchReportTask extends AsyncTask<PvtResult, Void, String> {
+	private class FetchReportTask extends AsyncTask<PvtResult, Void, SubmitPvtResult> {
 
 		@Override
-		protected String doInBackground(PvtResult... params) {
+		protected SubmitPvtResult doInBackground(PvtResult... params) {
 			PvtApi pvtApi = new PvtApi(new AndroidApiClient());
-			PvtResultsSubmission submission = new PvtResultsSubmission(pvtApi);
-			return submission.submit(accessToken, params[0]);
+			SubmitPvt submitPvt = new SubmitPvt(pvtApi);
+			return submitPvt.execute(user, params[0]);
 		}
 		
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(SubmitPvtResult result) {
 			TextView reportView = (TextView) findViewById(R.id.report);
-			reportView.setText(result);
+			if (result.isOk()) {
+				String summary = getString(R.string.report_summary);
+				PvtReport report = result.report();
+				summary = summary.replace("{{averageRt}}", String.valueOf(report.averageRt()));
+				summary = summary.replace("{{errors}}", String.valueOf(report.errors()));
+				summary = summary.replace("{{lapses}}", String.valueOf(report.lapses()));
+				reportView.setText(summary);
+			} else {
+				String error = getString(R.string.report_submission_error);
+				reportView.setText(error);
+			}
 		}
 	
 	}
