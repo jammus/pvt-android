@@ -9,8 +9,10 @@ public class ApiResponseUserTransformer {
 	
 	public static User transform(ApiResponse response) {
 		try {
-			JSONObject jsonResponse = response.toJson();
-			JSONObject jsonUser = jsonResponse.getJSONObject("user");
+			JSONObject jsonResponse = response.toJson()
+					.getJSONObject("response");
+			JSONObject jsonUser = jsonResponse
+					.getJSONObject("user");
 			
 			return new User(
 				jsonUser.getInt("id"),

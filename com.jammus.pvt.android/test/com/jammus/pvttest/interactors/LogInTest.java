@@ -56,14 +56,14 @@ public class LogInTest {
 	
 	@Test
 	public void testResultIsOkOnSuccess() throws ApiTransportException {
-		when(pvtApi.authenticateUser(anyString(), anyString())).thenReturn(new ApiResponse(200, "{ \"user\": { \"id\": 10001, \"name\": \"Test User\", \"email\": \"user@example.com\" }, \"access_token\": \"token\" }"));
+		when(pvtApi.authenticateUser(anyString(), anyString())).thenReturn(new ApiResponse(200, "{ \"response\": { \"user\": { \"id\": 10001, \"name\": \"Test User\", \"email\": \"user@example.com\" }, \"access_token\": \"token\" } }"));
 		LogInResult result = logInUser.execute("user@example.com", "hunter2");
 		assertTrue(result.isOk());
 	}
 	
 	@Test
 	public void testResultIncludesUserOnSuccess() throws ApiTransportException {
-		when(pvtApi.authenticateUser(anyString(), anyString())).thenReturn(new ApiResponse(200, "{ \"user\": { \"id\": 10001, \"name\": \"Test User\", \"email\": \"user@example.com\" }, \"access_token\": \"token\" }"));
+		when(pvtApi.authenticateUser(anyString(), anyString())).thenReturn(new ApiResponse(200, "{ \"response\": { \"user\": { \"id\": 10001, \"name\": \"Test User\", \"email\": \"user@example.com\" }, \"access_token\": \"token\" } }"));
 		LogInResult result = logInUser.execute("user@example.com", "hunter2");
 		assertEquals(10001, result.user().id());
 		assertEquals("Test User", result.user().name());
