@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 public class PerformTestActivity extends Activity {
 	
-	private static final long TEST_DURATION_NS = (long)(0.5 * 60 * 1000) * 1000000l; // m * s * ms * ns
+	private static final long TEST_DURATION_NS = (long)(0.2 * 60 * 1000) * 1000000l; // m * s * ms * ns
 	private PvtResult result;
 	private PvtResultsDataStore localResultsDataStore;
 	private long startTime;

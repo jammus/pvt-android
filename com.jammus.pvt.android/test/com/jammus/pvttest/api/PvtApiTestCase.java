@@ -32,8 +32,14 @@ public class PvtApiTestCase {
 	}
 	
 	protected void assertParameterEquals(String expected, String parameterName) throws ApiTransportException {
-		verify(apiClient, times(1)).post(anyString(), parameterCaptor.capture());
+		verify(apiClient, times(1)).post(anyString(), parameterCaptor.capture(), any(Dictionary.class));
 		Dictionary<String, String> parameters = parameterCaptor.getValue();
 		assertEquals(expected, parameters.get(parameterName));
+	}
+	
+	protected void assertHeaderEquals(String expected, String headerName) throws ApiTransportException {
+		verify(apiClient, times(1)).post(anyString(), any(Dictionary.class), parameterCaptor.capture());
+		Dictionary<String, String> parameters = parameterCaptor.getValue();
+		assertEquals(expected, parameters.get(headerName));
 	}
 }

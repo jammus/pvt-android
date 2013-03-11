@@ -23,7 +23,7 @@ public class LogIn {
 			return new LogInResult(LogInResult.UNKNOWN_ERROR);
 		}
 		
-		if (response != null && response.code() == 401) {
+		if (response != null && response.code() == 400) {
 			return new LogInResult(LogInResult.INVALID_EMAIL_OR_PASSWORD);
 		} 
 		

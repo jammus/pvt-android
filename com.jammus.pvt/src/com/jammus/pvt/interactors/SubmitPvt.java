@@ -44,7 +44,7 @@ public class SubmitPvt {
 			return new SubmitPvtResult(SubmitPvtResult.UNABLE_TO_LOAD_REPORT);
 		}
 		
-		return loadReport(reportUrl);
+		return loadReport(user.token(), reportUrl);
 	}
 	
 	private String decodeUrl(ApiResponse response) throws JSONException
@@ -55,11 +55,11 @@ public class SubmitPvt {
 		return jsonData.getString("location");
 	}
 	
-	private SubmitPvtResult loadReport(String reportUrl)
+	private SubmitPvtResult loadReport(String accessToken, String reportUrl)
 	{
 		ApiResponse response;
 		try {
-			response = pvtApi.fetchReport(reportUrl);
+			response = pvtApi.fetchReport(accessToken, reportUrl);
 		} catch (ApiTransportException e) {
 			response = null;
 		}

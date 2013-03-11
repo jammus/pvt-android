@@ -15,7 +15,7 @@ public class PvtApiSignUpTest extends PvtApiTestCase {
 	@Test
 	public void testPostsToUsersEndpoint() throws ApiTransportException {
 		pvtApi.signUp("Test User", "user@example.com", "password");
-		verify(apiClient, times(1)).post(eq("/users"), any(Dictionary.class));
+		verify(apiClient, times(1)).post(eq("/users"), any(Dictionary.class), any(Dictionary.class));
 	}
 
 	@Test

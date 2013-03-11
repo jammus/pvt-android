@@ -9,8 +9,8 @@ public class ApiResponseUserTransformer {
 	
 	public static User transform(ApiResponse response) {
 		try {
-			JSONObject jsonResponse = response.toJson()
-					.getJSONObject("response");
+			JSONObject jsonResponse = response.toJson();
+			
 			JSONObject jsonUser = jsonResponse
 					.getJSONObject("user");
 			

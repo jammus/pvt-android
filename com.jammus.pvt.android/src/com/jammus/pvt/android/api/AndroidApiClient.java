@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -31,6 +32,11 @@ public class AndroidApiClient implements ApiClient {
 	protected static final String BASE_URL = "http://pvt-api.eu01.aws.af.cm";
 	
 	public ApiResponse post(String url, Dictionary<String, String> params) throws ApiTransportException {
+		return post(url, params, new Hashtable<String, String>());
+	}
+	
+	public ApiResponse post(String url, Dictionary<String, String> params,
+			Dictionary<String, String> headers) throws ApiTransportException {
 		List<NameValuePair> postParams = new ArrayList<NameValuePair>(4);
 		Enumeration<String> enumeration = params.keys();
 		while (enumeration.hasMoreElements()) {
@@ -43,22 +49,37 @@ public class AndroidApiClient implements ApiClient {
 		
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(postParams));
-			response = httpClient.execute(httpPost);
 		} catch (UnsupportedEncodingException e) {
 			throw new ApiTransportException(e.getMessage());
+		}
+		
+		enumeration = headers.keys();
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
+			httpPost.addHeader(key, headers.get(key));
+		}
+		
+		try {
+			response = httpClient.execute(httpPost);
 		} catch (ClientProtocolException e) {
 			throw new ApiTransportException(e.getMessage());
 		} catch (IOException e) {
 			throw new ApiTransportException(e.getMessage());
 		}
-		
+	
 		return decodeResponse(response);
 	}
 
-	public ApiResponse get(String url) throws ApiTransportException {
+	public ApiResponse get(String url, Dictionary<String, String> headers) throws ApiTransportException {
 		HttpGet httpGet = new HttpGet(BASE_URL + url);
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpResponse response;
+		
+		Enumeration<String> enumeration = headers.keys();
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
+			httpGet.addHeader(key, headers.get(key));
+		}
 		
 		try {
 			response = httpClient.execute(httpGet);
@@ -70,7 +91,7 @@ public class AndroidApiClient implements ApiClient {
 		
 		return decodeResponse(response);
 	}
-		
+	
 	private ApiResponse decodeResponse(HttpResponse response) throws ApiTransportException
 	{
 		HttpEntity httpEntity = response.getEntity();

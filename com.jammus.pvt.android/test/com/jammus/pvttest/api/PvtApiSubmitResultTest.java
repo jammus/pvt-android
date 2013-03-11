@@ -19,7 +19,7 @@ public class PvtApiSubmitResultTest extends PvtApiTestCase {
 	@Test
 	public void testPostsToReportEndpoint() throws ApiTransportException {
 		pvtApi.submitResult("", new PvtResult());
-		verify(apiClient, times(1)).post(eq("/report"), any(Dictionary.class));
+		verify(apiClient, times(1)).post(eq("/report"), any(Dictionary.class), any(Dictionary.class));
 	}
 	
 	@Test

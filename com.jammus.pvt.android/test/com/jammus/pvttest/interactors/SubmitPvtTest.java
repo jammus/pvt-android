@@ -69,8 +69,8 @@ public class SubmitPvtTest {
 				"{\"response\": { \"location\": \"http://path/to/report\" } }"
 			)
 		);
-		SubmitPvtResult result = submitPvt.execute(new User(0, "", "", ""), new PvtResult());
-		verify(pvtApi, times(1)).fetchReport(eq("http://path/to/report"));
+		SubmitPvtResult result = submitPvt.execute(new User(0, "", "", "access_token"), new PvtResult());
+		verify(pvtApi, times(1)).fetchReport(eq("access_token"), eq("http://path/to/report"));
 	}
 	
 	@Test
@@ -82,8 +82,8 @@ public class SubmitPvtTest {
 				"{\"response\": { \"location\": \"http://path/to/report\" } }"
 			)
 		);
-		SubmitPvtResult result = submitPvt.execute(new User(0, "", "", ""), new PvtResult());
-		verify(pvtApi, times(1)).fetchReport(eq("http://path/to/report"));
+		SubmitPvtResult result = submitPvt.execute(new User(0, "", "", "access_token"), new PvtResult());
+		verify(pvtApi, times(1)).fetchReport(eq("access_token"), eq("http://path/to/report"));
 	}
 	
 	@Test
@@ -103,7 +103,7 @@ public class SubmitPvtTest {
 	public void testIncludesCouldNotLoadReportWhenFetchReportThrows() throws ApiTransportException
 	{
 		whenSubmissionIsSuccessful();
-		when(pvtApi.fetchReport(anyString())).thenThrow(new ApiTransportException(""));
+		when(pvtApi.fetchReport(anyString(), anyString())).thenThrow(new ApiTransportException(""));
 		SubmitPvtResult result = submitPvt.execute(new User(0, "", "", ""), new PvtResult());
 		assertTrue(result.hasError(SubmitPvtResult.UNABLE_TO_LOAD_REPORT));
 	}
@@ -112,7 +112,7 @@ public class SubmitPvtTest {
 	public void testResultIsOkWhenReportIsLoaded() throws ApiTransportException
 	{
 		whenSubmissionIsSuccessful();
-		when(pvtApi.fetchReport(anyString())).thenReturn(
+		when(pvtApi.fetchReport(anyString(), anyString())).thenReturn(
 			new ApiResponse(
 				200,
 				"{" +
@@ -137,7 +137,7 @@ public class SubmitPvtTest {
 	public void testResultIncludeReportWhenLoaded() throws ApiTransportException
 	{
 		whenSubmissionIsSuccessful();
-		when(pvtApi.fetchReport(anyString())).thenReturn(
+		when(pvtApi.fetchReport(anyString(), anyString())).thenReturn(
 			new ApiResponse(
 				200,
 				"{" +
