@@ -43,6 +43,7 @@
 	    android:layout_below="@+id/signUpDetailsHeading"
 	    android:layout_marginTop="15dp"
 	    android:hint="@string/label_name"
+	    android:background="@android:drawable/edit_text"
 	    android:inputType="textPersonName" />
 	
 	<EditText
@@ -51,6 +52,7 @@
       	android:layout_width="fill_parent"
       	android:layout_height="wrap_content"
       	android:hint="@string/label_email"
+	    android:background="@android:drawable/edit_text"
       	android:inputType="textEmailAddress" />
 
   	<TextView
@@ -69,6 +71,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="15dp"
 	    android:layout_below="@id/signUpPasswordHeading"
+	    android:background="@android:drawable/edit_text"
 	    android:hint="@string/label_password"
 	    android:inputType="textPassword" />
 	
@@ -77,6 +80,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_below="@id/signUpPassword"
+	    android:background="@android:drawable/edit_text"
 	    android:hint="@string/label_confirm_password"
 	    android:inputType="textPassword" />
 
