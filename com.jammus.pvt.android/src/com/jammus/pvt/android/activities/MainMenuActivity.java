@@ -35,9 +35,19 @@ public class MainMenuActivity extends Activity {
     }
     
     public void startTest(View view) {
+    	if ( ! user.hasCompletedScreening()) {
+    		startScreening();
+    		return;
+    	}
+    	
     	Intent intent = new Intent(this, PerformTestActivity.class);
     	intent.putExtra("user_id", user.id());
     	intent.putExtra("access_token", user.token());
+    	startActivity(intent);
+    }
+    
+    private void startScreening() {
+    	Intent intent = new Intent(this, ScreeningSurveyActivity.class);
     	startActivity(intent);
     }
     

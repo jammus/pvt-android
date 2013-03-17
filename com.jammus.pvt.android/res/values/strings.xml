@@ -39,5 +39,16 @@
     <string name="splash_loading">Loading…</string>
     <string name="report_summary">Your average response time was {{averageRt}}ms. You made {{errors}} error(s) and had {{lapses}} lapse(s).</string>
     <string name="report_submission_error">There was a problem submitting your results. Please try again later.</string>
+    <string name="title_activity_screening_survey">ScreeningSurveyActivity</string>
+    <string name="screening_header">Welcome</string>
+    <string name="screening_intro">Before you take your first test we need to ask you a few personal questions. This helps us better understand you and your sleep requirements.</string>
+    <string name="screener_dob_question">Date of birth</string>
+    <string name="screener_gender_question">Gender</string>
+    <string-array name="genders_array">
+        <item>Prefer not to say</item>
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+    <string name="button_next">Next</string>
 
 </resources>

@@ -8,21 +8,41 @@ import com.jammus.pvt.core.User;
 public class ApiResponseUserTransformer {
 	
 	public static User transform(ApiResponse response) {
+		JSONObject jsonResponse, jsonUser;
+		int id;
+		String name, email, access_token;
+		boolean surveyCompleted;
+		
 		try {
-			JSONObject jsonResponse = response.toJson();
-			
-			JSONObject jsonUser = jsonResponse
-					.getJSONObject("user");
-			
-			return new User(
-				jsonUser.getInt("id"),
-				jsonUser.getString("name"),
-				jsonUser.getString("email"),
-				jsonResponse.getString("access_token")
-			);
-		} catch (JSONException e) {
+			jsonResponse = response.toJson();
+			jsonUser = jsonResponse.getJSONObject("user");
+			id = jsonUser.getInt("id");
+			name = jsonUser.getString("name");
+			email = jsonUser.getString("email");
+		}
+		catch (JSONException e) {
 			return null;
 		}
+		
+		try {
+			access_token = jsonResponse.getString("access_token");
+		} catch (JSONException e) {
+			access_token = null;
+		}
+		
+		try {
+			surveyCompleted = jsonUser.getBoolean("survey_completed");
+		} catch (JSONException e) {
+			surveyCompleted = false;
+		}
+			
+		return new User(
+			id,
+			name,
+			email,
+			access_token,
+			surveyCompleted
+		);
 	}
 	
 }

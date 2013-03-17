@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background" >
+
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/defaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/screening_header"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:context=".ScreeningSurveyActivity" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/defaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/screening_intro"
+        tools:context=".ScreeningSurveyActivity" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/defaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="16dp"
+        android:text="@string/screener_dob_question"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:context=".ScreeningSurveyActivity" />
+
+    <EditText
+        android:id="@+id/editDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:ems="10"
+        android:inputType="date"
+        android:onClick="pickDate" />
+
+    <Spinner
+        android:id="@+id/genderPicker"
+        style="@style/defaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/defaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editDate"
+        android:layout_marginTop="16dp"
+        android:layout_alignLeft="@+id/editDate"
+        android:text="@string/screener_gender_question"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:context=".ScreeningSurveyActivity" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/genderPicker"
+        android:layout_below="@+id/genderPicker"
+        android:layout_marginTop="16dp"
+        android:text="@string/button_next" />
+
+</RelativeLayout>
